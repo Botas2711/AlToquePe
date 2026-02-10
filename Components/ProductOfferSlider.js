@@ -56,8 +56,6 @@ const ProductOfferSlider = () => {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
-        scrollEventThrottle={16}
-        contentContainerStyle={{ paddingHorizontal: 16 }}
       />
       <View style={styles.dotsContainer}>
         {products.map((_, index) => (
@@ -75,7 +73,7 @@ export default ProductOfferSlider;
 
 const styles = StyleSheet.create({
   slide: {
-    marginTop: 16,
+    marginTop: 20,
   },
   dotsContainer: {
     flexDirection: "row",

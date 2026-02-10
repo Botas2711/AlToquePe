@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity,Dimensions } from "react-native";
 import { colors } from "../Global/colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+
+const { width } = Dimensions.get("window");
 
 const CategoryItem = ({ category, active, onPress }) => {
   return (
@@ -26,6 +28,7 @@ export default CategoryItem;
 
 const styles = StyleSheet.create({
   container: {
+    width: width * 0.14,
     alignItems: "center",
     marginHorizontal: 10,
     marginVertical: 10,
@@ -47,13 +50,13 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "QuickSand-Regular",
     marginTop: 5,
-    fontSize: 9,
+    fontSize: 10,
     color: colors.text,
   },
   activeText: {
     fontFamily: "QuickSand-Bold",
-    marginTop: 5,
-    fontSize: 9,
+    marginTop: 6,
+    fontSize: 10,
     color: colors.text,
   },
 });

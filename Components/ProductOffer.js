@@ -42,13 +42,13 @@ export default ProductOffer;
 
 const styles = StyleSheet.create({
   boxContainer: {
-    width: width - 32,
+    width: width * 0.85,
     flexDirection: "row",
     borderRadius: 20,
     padding: 16,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 16
+    marginHorizontal: width * 0.075,
   },
   info: {
     width: "60%",
