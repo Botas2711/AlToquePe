@@ -1,13 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Header from '../Components/Header'
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import Header from "../Components/Header";
+import ProductOffer from "../Components/ProductOffer";
+import ProductOfferSlider from "../Components/ProductOfferSlider";
 
 const Home = () => {
   return (
-    <Header/>
-  )
-}
+    <>
+      <Header />
+      <ProductOfferSlider/>
+    </>
+  );
+};
 
-export default Home
+export default Home;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
