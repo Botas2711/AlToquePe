@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from 'react-native';
-import Header from './Components/Header';
-import { loadFonts } from "./Global/fonts"
+import { StyleSheet, Text, View } from "react-native";
+import Header from "./Components/Header";
+import { loadFonts } from "./Global/fonts";
+import Navigator from "./Navigation/Navigator";
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -15,10 +17,12 @@ export default function App() {
     loadAllFonts();
   }, []);
 
-  if (!fontsLoaded) return null; 
+  if (!fontsLoaded) return null;
 
   return (
-    <Header/>
+    <NavigationContainer>
+      <Navigator />
+    </NavigationContainer>
   );
 }
 
