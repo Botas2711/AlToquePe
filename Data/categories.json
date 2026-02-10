@@ -1,0 +1,28 @@
+[
+  {
+    "id": "1",
+    "name": "Belleza",
+    "icon": "spray-can-sparkles"
+  },
+  
+  {
+    "id": "2",
+    "name": "Ropa",
+    "icon": "shirt"
+  },
+  {
+    "id": "3",
+    "name": "Hogar",
+    "icon": "house"
+  },
+  {
+    "id": "4",
+    "name": "Tecnología",
+    "icon": "mobile-screen"
+  },
+  {
+    "id": "5",
+    "name": "Deportes",
+    "icon": "soccer-ball"
+  }
+]

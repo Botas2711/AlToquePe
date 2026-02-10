@@ -4,5 +4,5 @@ export const colors = {
   primary: "#ea2a15",
   secondary: "#f3d915",
   black: "#000",
-  
+  disable: "#ccc",
 };
