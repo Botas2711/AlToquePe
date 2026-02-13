@@ -28,34 +28,37 @@ const QuickBrowser = () => {
   }, [activeCategoryId]);
 
   return (
-    <View>
-      <ProductOfferSlider />
-      <View style={styles.categoryContainer}>
-        <Text style={styles.categoryTitle}>Categorias populares</Text>
-        <FlatList
-          data={categories}
-          keyExtractor={(item) => item.id}
-          horizontal
-          renderItem={({ item }) => (
-            <CategoryItem
-              category={item}
-              active={item.id === activeCategoryId}
-              onPress={handlePress}
+    <FlatList
+      data={filteredProducts}
+      keyExtractor={(item) => item.id}
+      numColumns={2}
+      columnWrapperStyle={styles.row}
+      renderItem={({ item }) => <ProductItem product={item} />}
+      ListHeaderComponent={
+        <>
+          <ProductOfferSlider />
+
+          <View style={styles.categoryContainer}>
+            <Text style={styles.categoryTitle}>Categorías populares</Text>
+
+            <FlatList
+              data={categories}
+              keyExtractor={(item) => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <CategoryItem
+                  category={item}
+                  active={item.id === activeCategoryId}
+                  onPress={handlePress}
+                />
+              )}
             />
-          )}
-        />
-      </View>
-      <View>
-        <FlatList
-          style={styles.productList}
-          data={filteredProducts}
-          renderItem={({ item }) => <ProductItem product={item} />}
-          keyExtractor={(item) => item.id}
-          columnWrapperStyle={styles.row}
-          numColumns={2}
-        />
-      </View>
-    </View>
+          </View>
+        </>
+      }
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
 
@@ -68,12 +71,16 @@ const styles = StyleSheet.create({
   },
   categoryTitle: {
     fontFamily: "QuickSand-Bold",
-    fontSize: 15,
+    fontSize: 16,
     marginHorizontal: 18,
     marginBottom: 2,
   },
-  productList:{
+  productList: {
     marginHorizontal: 10,
-  }
-
+  },
+  row: {
+    justifyContent: "space-between",
+    marginVertical: 5,
+    marginHorizontal: 7,
+  },
 });

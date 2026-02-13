@@ -1,4 +1,4 @@
-import { StyleSheet, Text, } from "react-native";
+import { StyleSheet, Text, View} from "react-native";
 import Header from "../Components/Header";
 import QuickBrowser from "../Components/QuickBrowser";
 

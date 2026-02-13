@@ -9,7 +9,12 @@ const Header = () => {
         <Text style={styles.label}>Enviar a</Text>
         <View style={styles.location}>
           <Text style={styles.place}>Casa</Text>
-          <Ionicons style={styles.option} name="caret-down-outline" size={12} color={colors.text} />
+          <Ionicons
+            style={styles.option}
+            name="caret-down-outline"
+            size={12}
+            color={colors.text}
+          />
         </View>
       </View>
       <View style={styles.main}>
@@ -43,10 +48,11 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     overflow: "hidden",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.23,
-    shadowRadius: 4,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.35,
+    shadowRadius: 6,
+    elevation: 8,
+    zIndex: 10,
   },
   logo: {
     width: 25,
@@ -109,6 +115,6 @@ const styles = StyleSheet.create({
     fontFamily: "QuickSand-Bold",
   },
   option: {
-    marginTop: 3
-  }
+    marginTop: 3,
+  },
 });

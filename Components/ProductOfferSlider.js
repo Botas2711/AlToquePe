@@ -73,7 +73,7 @@ export default ProductOfferSlider;
 
 const styles = StyleSheet.create({
   slide: {
-    marginTop: 20,
+    marginTop: 25,
   },
   dotsContainer: {
     flexDirection: "row",
