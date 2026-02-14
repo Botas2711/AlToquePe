@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,11 +15,8 @@ const TabNavigator = () => {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: {
-          backgroundColor: colors.white,
-          height: 60,
-        },
-        tabBarIcon: ({ focused, size }) => {
+        tabBarStyle: styles.tabBar,
+        tabBarIcon: ({ focused }) => {
           let iconName;
           if (route.name === "Home")
             iconName = focused ? "home-sharp" : "home-outline";
@@ -33,7 +30,7 @@ const TabNavigator = () => {
           return (
             <Ionicons
               name={iconName}
-              size={size ?? 24}
+              size={26}
               color={focused ? colors.primary : colors.black}
             />
           );
@@ -49,3 +46,14 @@ const TabNavigator = () => {
 };
 
 export default TabNavigator;
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: colors.background,
+    height: 70,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 8,
+  },
+});

@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  Platform,
+  StatusBar,
+} from "react-native";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -44,9 +52,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     width: "100%",
-    height: 65,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    height: 82,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
     overflow: "hidden",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.35,

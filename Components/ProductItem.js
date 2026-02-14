@@ -1,5 +1,15 @@
-import { StyleSheet, Text, View, Pressable, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Image,
+  Dimensions,
+} from "react-native";
 import { colors } from "../Global/colors";
+
+const { width } = Dimensions.get("window");
+const ITEM_WIDTH = width / 2 - 10;
 
 const ProductItem = ({ product }) => {
   return (
@@ -29,7 +39,7 @@ export default ProductItem;
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    width: "50%",
+    width: ITEM_WIDTH,
   },
   imageContainer: {
     backgroundColor: colors.background,
@@ -38,8 +48,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   image: {
-    width: 140,
-    height: 140,
+    width: ITEM_WIDTH * 0.7,
+    height: ITEM_WIDTH * 0.7,
     resizeMode: "contain",
   },
   name: {

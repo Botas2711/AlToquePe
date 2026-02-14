@@ -4,7 +4,7 @@
     "name": "Belleza",
     "icon": "spray-can-sparkles"
   },
-  
+
   {
     "id": "2",
     "name": "Ropa",
@@ -13,7 +13,7 @@
   {
     "id": "3",
     "name": "Hogar",
-    "icon": "house"
+    "icon": "kitchen-set"
   },
   {
     "id": "4",
@@ -24,5 +24,25 @@
     "id": "5",
     "name": "Deportes",
     "icon": "soccer-ball"
+  },
+  {
+    "id": "6",
+    "name": "Accesorios",
+    "icon": "glasses"
+  },
+  {
+    "id": "7",
+    "name": "Salud",
+    "icon": "heart-pulse"
+  },
+  {
+    "id": "8",
+    "name": "Juguetes",
+    "icon": "puzzle-piece"
+  },
+  {
+    "id": "9",
+    "name": "Mascotas",
+    "icon": "paw"
   }
 ]

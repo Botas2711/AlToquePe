@@ -1,21 +1,29 @@
 import Header from "../Components/Header";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "../Screens/Home";
+import HomeScreen from "../Screens/HomeScreen";
+import { StatusBar } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
 export default function HomeStack() {
   return (
-    <Stack.Navigator
-      screenOptions={({ route, options }) => ({
-        header: () => <Header title={options?.title ?? route.name} />,
-      })}
-    >
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ title: "Home" }}
+    <>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="black"
+        translucent={false}
       />
-    </Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={({ route, options }) => ({
+          header: () => <Header title={options?.title ?? route.name} />,
+        })}
+      >
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: "Home" }}
+        />
+      </Stack.Navigator>
+    </>
   );
 }
