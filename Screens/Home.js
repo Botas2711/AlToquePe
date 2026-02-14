@@ -1,12 +1,10 @@
 import { StyleSheet, Text, View} from "react-native";
-import Header from "../Components/Header";
 import QuickBrowser from "../Components/QuickBrowser";
 
 const Home = () => {;
 
   return (
     <>
-      <Header />
       <QuickBrowser/>
     </>
   );
