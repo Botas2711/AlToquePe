@@ -5,4 +5,5 @@ export const colors = {
   secondary: "#f3d915",
   black: "#000",
   disable: "#ccc",
+  like: "#6bb38e",
 };

@@ -6,7 +6,7 @@ import categories from "../Data/categories.json";
 import allProducts from "../Data/products";
 import ProductItem from "../Components/ProductItem";
 
-const ShopScreen = () => {
+const Shop = ({ navigation }) => {
   const allProductsOrder = allProducts.sort((a, b) =>
     a.name.localeCompare(b.name),
   );
@@ -41,7 +41,7 @@ const ShopScreen = () => {
         keyExtractor={(item) => item.id}
         numColumns={2}
         columnWrapperStyle={styles.row}
-        renderItem={({ item }) => <ProductItem product={item} />}
+        renderItem={({ item }) => <ProductItem product={item} onPress={() => navigation.navigate("ProductDetail", { product: item })}/>}
         ListHeaderComponent={
           <>
             <Search onSearch={setSearchText} />
@@ -71,7 +71,7 @@ const ShopScreen = () => {
   );
 };
 
-export default ShopScreen;
+export default Shop;
 
 const styles = StyleSheet.create({
   categoryContainer: {

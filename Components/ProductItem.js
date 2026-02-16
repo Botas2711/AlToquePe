@@ -11,10 +11,10 @@ import { colors } from "../Global/colors";
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = width / 2 - 10;
 
-const ProductItem = ({ product }) => {
+const ProductItem = ({ product, onPress }) => {
   return (
     <View style={styles.container}>
-      <Pressable style={styles.imageContainer}>
+      <Pressable style={styles.imageContainer} onPress={onPress}>
         <Image source={product.image} style={styles.image} />
       </Pressable>
 

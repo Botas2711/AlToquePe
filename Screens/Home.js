@@ -1,9 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList
-} from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import ProductOfferSlider from "../Components/ProductOfferSlider";
 import CategoryItem from "../Components/CategoryItem";
 import { useState, useEffect } from "react";
@@ -11,7 +6,7 @@ import categories from "../Data/categories.json";
 import allProducts from "../Data/products";
 import ProductItem from "../Components/ProductItem";
 
-const HomeScreen = () => {
+const Home = ({ navigation }) => {
   const [activeCategoryId, setActiveCategoryId] = useState("1");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -36,7 +31,12 @@ const HomeScreen = () => {
         keyExtractor={(item) => item.id}
         numColumns={2}
         columnWrapperStyle={styles.row}
-        renderItem={({ item }) => <ProductItem product={item} />}
+        renderItem={({ item }) => (
+          <ProductItem
+            product={item}
+            onPress={() => navigation.navigate("ProductDetail", { product: item })}
+          />
+        )}
         ListHeaderComponent={
           <>
             <ProductOfferSlider />
@@ -66,7 +66,7 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default Home;
 
 const styles = StyleSheet.create({
   categoryContainer: {

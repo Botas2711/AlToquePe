@@ -1,6 +1,7 @@
 import Header from "../Components/Header";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "../Screens/HomeScreen";
+import Home from "../Screens/Home";
+import ProductDetail from "../Screens/ProductDetail";
 import { StatusBar } from "react-native";
 
 const Stack = createNativeStackNavigator();
@@ -18,11 +19,8 @@ export default function HomeStack() {
           header: () => <Header title={options?.title ?? route.name} />,
         })}
       >
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: "Home" }}
-        />
+        <Stack.Screen name="Home" component={Home} options={{ title: "Home" }}/>
+        <Stack.Screen name="ProductDetail" component={ProductDetail} options={{ title: "Product Detail", headerShown: false }}/>
       </Stack.Navigator>
     </>
   );
