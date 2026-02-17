@@ -11,11 +11,7 @@ export default function CartStack() {
         header: () => <Header title={options?.title ?? route.name} />,
       })}
     >
-      <Stack.Screen
-        name="Cart"
-        component={Cart}
-        options={{ title: "Cart" }}
-      />
+      <Stack.Screen name="Cart" component={Cart} options={{ title: "Cart", headerShown: false }}/>
     </Stack.Navigator>
   );
 }

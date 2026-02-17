@@ -852,7 +852,7 @@ const products = [
   },
   {
     id: "60",
-    name: "Sony PlayStation 5 Mario Kart World",
+    name: "Sony PlayStation 5",
     categoryId: "8",
     oldPrice: 3560.0,
     newPrice: 2399.0,

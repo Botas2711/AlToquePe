@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   newPrice: {
     fontSize: 18,
     fontFamily: "QuickSand-Bold",
-    color: colors.primary,
+    color: colors.black,
   },
   oldPrice: {
     fontSize: 14,
