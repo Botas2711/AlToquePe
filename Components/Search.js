@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: colors.background,
     marginHorizontal: 22,
-    marginTop: 20,
+    marginTop: 22,
     marginBottom: 10,
     paddingHorizontal: 12,
     height: 45,

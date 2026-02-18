@@ -14,7 +14,7 @@ const Cart = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Mi Carrito</Text>
       <FlatList
-        data={allProducts.slice(0, 7)}
+        data={allProducts.slice(0, 2)}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <CartItem product={item} />}
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 50 }}
@@ -24,7 +24,7 @@ const Cart = () => {
       <View style={styles.footer}>
         <View style={styles.totalContainer}>
           <Text style={styles.totalLabel}>Total</Text>
-          <Text style={styles.totalPrice}>S/200</Text>
+          <Text style={styles.totalPrice}>S/200.00</Text>
         </View>
 
         <TouchableOpacity style={styles.button}>

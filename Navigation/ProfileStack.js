@@ -11,10 +11,7 @@ export default function ProfileStack() {
         header: () => <Header title={options?.title ?? route.name} />,
       })}
     >
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={{ title: "Profile" }}
+      <Stack.Screen name="Profile" component={Profile} options={{ title: "Profile", headerShown: false }}
       />
     </Stack.Navigator>
   );
