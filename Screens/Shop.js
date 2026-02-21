@@ -2,16 +2,23 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 import { useState, useEffect } from "react";
 import Search from "../Components/Search";
 import CategoryItem from "../Components/CategoryItem";
-import categories from "../Data/categories.json";
-import allProducts from "../Data/products";
 import ProductItem from "../Components/ProductItem";
+import { useDispatch, useSelector } from "react-redux";
+import { setShopSelectedCategory } from "../Store/features/Shop/shopSlice";
 
 const Shop = ({ navigation }) => {
-  const allProductsOrder = allProducts.sort((a, b) =>
+  const categories = useSelector((state) => state.shop.categories);
+  const products = useSelector((state) => state.shop.products);
+
+  const dispatch = useDispatch();
+
+  const selectedCategory = useSelector((state) => state.shop.shopSelectedCategory);
+  const activeCategoryId = selectedCategory?.id;
+  const allProductsOrder = [...products].sort((a, b) =>
     a.name.localeCompare(b.name),
   );
+
   const [searchText, setSearchText] = useState("");
-  const [activeCategoryId, setActiveCategoryId] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(allProductsOrder);
 
   useEffect(() => {
@@ -30,8 +37,12 @@ const Shop = ({ navigation }) => {
     setFilteredProducts(filtered);
   }, [searchText, activeCategoryId]);
 
-  const handlePress = (id) => {
-    setActiveCategoryId((prevId) => (prevId === id ? null : id));
+  const handlePress = (category) => {
+    if (selectedCategory?.id === category.id) {
+      dispatch(setShopSelectedCategory(null));
+    } else {
+      dispatch(setShopSelectedCategory(category));
+    }
   };
 
   return (
@@ -41,7 +52,14 @@ const Shop = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         numColumns={2}
         columnWrapperStyle={styles.row}
-        renderItem={({ item }) => <ProductItem product={item} onPress={() => navigation.navigate("ProductDetail", { product: item })}/>}
+        renderItem={({ item }) => (
+          <ProductItem
+            product={item}
+            onPress={() =>
+              navigation.navigate("ProductDetail", { product: item })
+            }
+          />
+        )}
         ListHeaderComponent={
           <>
             <Search onSearch={setSearchText} />
@@ -58,7 +76,7 @@ const Shop = ({ navigation }) => {
                   <CategoryItem
                     category={item}
                     active={item.id === activeCategoryId}
-                    onPress={handlePress}
+                    onPress={() => handlePress(item)}
                   />
                 )}
               />

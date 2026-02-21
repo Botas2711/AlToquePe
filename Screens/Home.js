@@ -2,27 +2,36 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 import ProductOfferSlider from "../Components/ProductOfferSlider";
 import CategoryItem from "../Components/CategoryItem";
 import { useState, useEffect } from "react";
-import categories from "../Data/categories.json";
-import allProducts from "../Data/products";
 import ProductItem from "../Components/ProductItem";
+import { useDispatch, useSelector } from "react-redux";
+import { setHomeSelectedCategory } from "../Store/features/Shop/shopSlice";
 
 const Home = ({ navigation }) => {
-  const [activeCategoryId, setActiveCategoryId] = useState("1");
+  const categories = useSelector((state) => state.shop.categories);
+  const categoriesPopulares = categories.slice(0, 5);
+
+  const products = useSelector((state) => state.shop.products);
+  const selectedCategory = useSelector((state) => state.shop.homeSelectedCategory);
+
+  const dispatch = useDispatch();
+
+  const activeCategoryId = selectedCategory?.id;
+
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const handlePress = (id) => {
-    setActiveCategoryId(id);
+  const handlePress = (category) => {
+    dispatch(setHomeSelectedCategory(category));
   };
 
   useEffect(() => {
-    const activeCategory = categories.find(
-      (cat) => cat.id === activeCategoryId,
+    if (!selectedCategory) return;
+
+    const filtered = products.filter(
+      (product) => product.categoryId === selectedCategory.id,
     );
-    const filtered = allProducts.filter(
-      (product) => product.categoryId === activeCategory.id,
-    );
+
     setFilteredProducts(filtered);
-  }, [activeCategoryId]);
+  }, [selectedCategory]);
 
   return (
     <>
@@ -34,7 +43,9 @@ const Home = ({ navigation }) => {
         renderItem={({ item }) => (
           <ProductItem
             product={item}
-            onPress={() => navigation.navigate("ProductDetail", { product: item })}
+            onPress={() =>
+              navigation.navigate("ProductDetail", { product: item })
+            }
           />
         )}
         ListHeaderComponent={
@@ -45,7 +56,7 @@ const Home = ({ navigation }) => {
               <Text style={styles.categoryTitle}>Categorías populares</Text>
 
               <FlatList
-                data={categories.slice(0, 5)}
+                data={categoriesPopulares}
                 keyExtractor={(item) => item.id}
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -53,7 +64,7 @@ const Home = ({ navigation }) => {
                   <CategoryItem
                     category={item}
                     active={item.id === activeCategoryId}
-                    onPress={handlePress}
+                    onPress={() => handlePress(item)}
                   />
                 )}
               />
