@@ -8,13 +8,21 @@ import {
 import CartItem from "../Components/CartItem";
 import allProducts from "../Data/products";
 import { colors } from "../Global/colors";
+import { useSelector } from "react-redux";
+import { useMemo } from "react";
 
 const Cart = () => {
+  const cartItems = useSelector((state) => state.cart.items);
+
+  const totalPrice = useMemo(() => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  }, [cartItems]);
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mi Carrito</Text>
       <FlatList
-        data={allProducts.slice(0, 2)}
+        data={cartItems}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <CartItem product={item} />}
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 50 }}
@@ -24,7 +32,7 @@ const Cart = () => {
       <View style={styles.footer}>
         <View style={styles.totalContainer}>
           <Text style={styles.totalLabel}>Total</Text>
-          <Text style={styles.totalPrice}>S/200.00</Text>
+          <Text style={styles.totalPrice}>S/{totalPrice.toFixed(2)}</Text>
         </View>
 
         <TouchableOpacity style={styles.button}>

@@ -9,12 +9,17 @@ import {
 } from "react-native";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../Store/features/Cart/cartSlice";
 
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = width * 0.85;
 
 const ProductDetail = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
   const product = route.params.product;
+  const isInCart = cartItems.some((item) => item.id === product.id);
 
   return (
     <View style={styles.container}>
@@ -65,10 +70,18 @@ const ProductDetail = ({ navigation, route }) => {
             <Text style={styles.newPrice}>S/{product.oldPrice.toFixed(2)}</Text>
           )}
         </View>
-
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Agregar al carrito</Text>
-        </TouchableOpacity>
+        {isInCart ? (
+          <View style={styles.buttonDisabled}>
+            <Text style={styles.buttonText}>En el carrito</Text>
+          </View>
+        ) : (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => dispatch(addToCart(product))}
+          >
+            <Text style={styles.buttonText}>Agregar al carrito</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -162,6 +175,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     paddingVertical: 12,
     paddingHorizontal: 60,
+    borderRadius: 10,
+  },
+  buttonDisabled: {
+    backgroundColor: colors.disable,
+    paddingVertical: 12,
+    paddingHorizontal: 80,
     borderRadius: 10,
   },
   buttonText: {

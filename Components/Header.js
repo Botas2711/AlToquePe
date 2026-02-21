@@ -9,8 +9,13 @@ import {
 } from "react-native";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const total = useSelector((state) =>
+    state.cart.items.reduce((sum, item) => sum + item.quantity, 0),
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.addressContainer}>
@@ -32,13 +37,15 @@ const Header = () => {
         />
         <Text style={styles.title}>AlToquePe</Text>
       </View>
-      <Pressable style={styles.cartContainer}>
+      <View style={styles.cartContainer}>
         <Ionicons name="cart-outline" size={18} color={colors.background} />
 
-        <View style={styles.badge}>
-          <Text style={styles.badgeText}>3</Text>
-        </View>
-      </Pressable>
+        {total > 0 && (
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{total}</Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 };

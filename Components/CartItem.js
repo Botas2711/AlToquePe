@@ -8,36 +8,54 @@ import {
 } from "react-native";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  increaseQuantity,
+  decreaseQuantity,
+  removeFromCart,
+} from "../Store/features/Cart/cartSlice";
 
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = width / 4;
 
 const CartItem = ({ product }) => {
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
       <Image source={product.image} style={styles.image} />
 
       <View style={styles.infoContainer}>
-        <Text style={styles.name} numberOfLines={2}>{product.name}</Text>
-
-        <Text style={styles.price}>
-          S/{(product.newPrice ?? product.oldPrice).toFixed(2)}
+        <Text style={styles.name} numberOfLines={2}>
+          {product.name}
         </Text>
 
+        <Text style={styles.price}>S/{product.price.toFixed(2)}</Text>
+
         <View style={styles.quantityContainer}>
-          <TouchableOpacity style={styles.qtyButton}>
+          <TouchableOpacity
+            style={styles.qtyButton}
+            disabled={product.quantity === 1}
+            onPress={() => dispatch(decreaseQuantity(product))}
+          >
             <Ionicons name="remove" size={18} color={colors.primary} />
           </TouchableOpacity>
 
-          <Text style={styles.quantity}>1</Text>
+          <Text style={styles.quantity}>{product.quantity}</Text>
 
-          <TouchableOpacity style={styles.qtyButton}>
+          <TouchableOpacity
+            style={styles.qtyButton}
+            onPress={() => dispatch(increaseQuantity(product))}
+          >
             <Ionicons name="add" size={18} color={colors.primary} />
           </TouchableOpacity>
         </View>
       </View>
 
-      <TouchableOpacity style={styles.deleteButton}>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={() => dispatch(removeFromCart(product))}
+      >
         <Ionicons name="trash-outline" size={20} color={colors.primary} />
       </TouchableOpacity>
     </View>
