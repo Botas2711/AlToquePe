@@ -1,0 +1,1 @@
+export const FIREBASE_DB_URL = "https://altoquepeapp-31a7c-default-rtdb.firebaseio.com/";

@@ -2,42 +2,17 @@ import { StyleSheet, Text, View, FlatList, Dimensions } from "react-native";
 import ProductOffer from "./ProductOffer";
 import { useState } from "react";
 import { colors } from "../Global/colors";
+import { useGetProductsQuery } from "../Services/shopService";
 
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = width - 32;
 
-const ProductOfferSlider = () => {
+const ProductOfferSlider = ({ navigation }) => {
+  const { data: products = [], isLoading, error } = useGetProductsQuery();
+  const productsForSlider = products.filter(
+    (product) => product.isOffer === true,
+  );
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const products = [
-    {
-      id: "1",
-      brand: "Apple",
-      title: "MacBook Air M4",
-      oldPrice: 5299.0,
-      newPrice: 4999.0,
-      image: require("../assets/images/macBook.png"),
-      color: "#D4EAF7",
-    },
-    {
-      id: "2",
-      brand: "Apple",
-      title: "iPhone 17 Pro Max",
-      oldPrice: 8999.0,
-      newPrice: 5399.0,
-      image: require("../assets/images/iphone.png"),
-      color: "#FDECEC",
-    },
-    {
-      id: "3",
-      brand: "Apple",
-      title: "AirPods Pro 3",
-      oldPrice: 1299,
-      newPrice: 949.99,
-      image: require("../assets/images/airpods.png"),
-      color: "#DFF3E3",
-    },
-  ];
 
   const handleScroll = (event) => {
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -49,16 +24,23 @@ const ProductOfferSlider = () => {
     <View>
       <FlatList
         style={styles.slide}
-        data={products}
+        data={productsForSlider}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <ProductOffer product={item} />}
+        renderItem={({ item }) => (
+          <ProductOffer
+            product={item}
+            onPress={() =>
+              navigation.navigate("ProductDetail", { product: item })
+            }
+          />
+        )}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
       />
       <View style={styles.dotsContainer}>
-        {products.map((_, index) => (
+        {productsForSlider.map((_, index) => (
           <View
             key={index}
             style={[styles.dot, activeIndex === index && styles.activeDot]}

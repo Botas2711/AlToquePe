@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import CartItem from "../Components/CartItem";
-import allProducts from "../Data/products";
 import { colors } from "../Global/colors";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";

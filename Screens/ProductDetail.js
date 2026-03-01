@@ -32,7 +32,7 @@ const ProductDetail = ({ navigation, route }) => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.imageContainer}>
-          <Image source={product.image} style={styles.image} />
+          <Image source={{ uri: product.image }} style={styles.image} />
         </View>
 
         <View style={styles.infoContainer}>

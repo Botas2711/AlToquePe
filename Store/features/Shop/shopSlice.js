@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import allProducts from "../../../Data/products";
+import allProducts from "../../../Data/products.json";
 import allCategories from "../../../Data/categories.json";
 
 const shopSlice = createSlice({
@@ -30,6 +30,6 @@ export const {
   setCategories,
   setProducts,
   setShopSelectedCategory,
-  setHomeSelectedCategory
+  setHomeSelectedCategory,
 } = shopSlice.actions;
 export default shopSlice.reducer;

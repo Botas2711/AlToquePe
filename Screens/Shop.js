@@ -1,47 +1,57 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Search from "../Components/Search";
 import CategoryItem from "../Components/CategoryItem";
 import ProductItem from "../Components/ProductItem";
-import { useDispatch, useSelector } from "react-redux";
-import { setShopSelectedCategory } from "../Store/features/Shop/shopSlice";
+import {
+  useGetCategoriesQuery,
+  useGetProductsQuery,
+  useGetProductsByCategoryQuery,
+} from "../Services/shopService";
 
 const Shop = ({ navigation }) => {
-  const categories = useSelector((state) => state.shop.categories);
-  const products = useSelector((state) => state.shop.products);
+  const { data: categories, isLoading, error } = useGetCategoriesQuery();
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchText, setSearchText] = useState("");
 
-  const dispatch = useDispatch();
+  const { data: allProducts = [], isLoading: loadingAll } = useGetProductsQuery(
+    undefined,
+    {
+      skip: !!selectedCategory,
+    },
+  );
 
-  const selectedCategory = useSelector((state) => state.shop.shopSelectedCategory);
+  const { data: categoryProducts = [], isLoading: loadingCategory } =
+    useGetProductsByCategoryQuery(selectedCategory, {
+      skip: !selectedCategory,
+    });
+
+  const products = selectedCategory ? categoryProducts : allProducts;
+
   const activeCategoryId = selectedCategory?.id;
   const allProductsOrder = [...products].sort((a, b) =>
     a.name.localeCompare(b.name),
   );
 
-  const [searchText, setSearchText] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState(allProductsOrder);
+  const filteredProducts = useMemo(() => {
+    return products
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .filter((product) => {
+        const lowerText = searchText.toLowerCase();
 
-  useEffect(() => {
-    const filtered = allProductsOrder.filter((product) => {
-      const lowerText = searchText.toLowerCase();
-      const matchText =
-        product.name.toLowerCase().includes(lowerText) ||
-        product.brand.toLowerCase().includes(lowerText);
-
-      const matchCategory = activeCategoryId
-        ? product.categoryId === activeCategoryId
-        : true;
-      return matchText && matchCategory;
-    });
-
-    setFilteredProducts(filtered);
-  }, [searchText, activeCategoryId]);
+        return (
+          product.name.toLowerCase().includes(lowerText) ||
+          product.brand.toLowerCase().includes(lowerText)
+        );
+      });
+  }, [products, searchText]);
 
   const handlePress = (category) => {
     if (selectedCategory?.id === category.id) {
-      dispatch(setShopSelectedCategory(null));
+      setSelectedCategory(null);
     } else {
-      dispatch(setShopSelectedCategory(category));
+      setSelectedCategory(category);
     }
   };
 

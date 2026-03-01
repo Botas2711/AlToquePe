@@ -3,7 +3,7 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
+  Pressable,
   Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -11,7 +11,7 @@ import { colors } from "../Global/colors";
 
 const { width } = Dimensions.get("window");
 
-const ProductOffer = ({ product }) => {
+const ProductOffer = ({ product, onPress }) => {
   return (
     <LinearGradient
       colors={[product.color, colors.background]}
@@ -21,19 +21,19 @@ const ProductOffer = ({ product }) => {
     >
       <View style={styles.info}>
         <Text style={styles.brand}>{product.brand}</Text>
-        <Text style={styles.title}>{product.title}</Text>
+        <Text style={styles.title}>{product.name}</Text>
 
         <View style={styles.prices}>
           <Text style={styles.oldPrice}>S/{product.oldPrice.toFixed(2)}</Text>
           <Text style={styles.newPrice}>S/{product.newPrice.toFixed(2)}</Text>
         </View>
 
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Agregar al carrito</Text>
-        </TouchableOpacity>
+        <Pressable style={styles.button} onPress={onPress}>
+          <Text style={styles.buttonText}>Ver detalle</Text>
+        </Pressable>
       </View>
 
-      <Image source={product.image} style={styles.image} />
+      <Image source={{ uri: product.image }} style={styles.image} />
     </LinearGradient>
   );
 };

@@ -15,7 +15,7 @@ const ProductItem = ({ product, onPress }) => {
   return (
     <View style={styles.container}>
       <Pressable style={styles.imageContainer} onPress={onPress}>
-        <Image source={product.image} style={styles.image} />
+        <Image source={{ uri: product.image }} style={styles.image} />
       </Pressable>
 
       <Text style={styles.name}>{product.name}</Text>

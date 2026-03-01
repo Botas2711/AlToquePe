@@ -891,6 +891,19 @@ const products = [
   },
   // Mascotas
   {
+    id: "63",
+    name: "Canbo Comida para Gatos Esterilizados 7Kg",
+    categoryId: "9",
+    oldPrice: 140.0,
+    newPrice: null,
+    brand: "Canbo",
+    image: CanboGato,
+    rating: 4.5,
+    likes: 82.7,
+    description:
+      "Alimento balanceado especialmente formulado para gatos esterilizados. Con proteínas de alta calidad y control de minerales, ayuda a mantener un peso saludable y promueve la salud urinaria.",
+  },
+  {
     id: "64",
     name: "Petizoos Rascador para Gatos",
     categoryId: "9",
