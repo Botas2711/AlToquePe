@@ -17,6 +17,7 @@ export default function ShopStack() {
       <Stack.Navigator
         screenOptions={({ route, options }) => ({
           header: () => <Header title={options?.title ?? route.name} />,
+          animation: "slide_from_bottom",
         })}
       >
         <Stack.Screen name="Shop" component={Shop} options={{ title: "Search" }}/>

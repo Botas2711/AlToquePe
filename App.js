@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { loadFonts } from "./Global/fonts";
-import { NavigationContainer } from "@react-navigation/native";
-import TabNavigator from "./Navigation/TabNavigator";
 import { Provider } from "react-redux";
 import { store } from "./Store/store.js";
+import MainNavigator from "./Navigation/MainNavigator.js";
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -21,9 +20,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <TabNavigator />
-      </NavigationContainer>
+      <MainNavigator />
     </Provider>
   );
 }
