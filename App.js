@@ -3,6 +3,7 @@ import { loadFonts } from "./Global/fonts";
 import { Provider } from "react-redux";
 import { store } from "./Store/store.js";
 import MainNavigator from "./Navigation/MainNavigator.js";
+import Toast from "react-native-toast-message";
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -21,6 +22,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <MainNavigator />
+      <Toast />
     </Provider>
   );
 }

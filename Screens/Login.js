@@ -1,9 +1,24 @@
 import { StyleSheet, Text, View, Pressable, Animated } from "react-native";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../Store/features/Auth/authSlice";
 import InputForm from "../Components/InputForm";
 import { colors } from "../Global/colors";
+import { useLoginMutation } from "../Services/authService";
+import { useGetUserByIdQuery } from "../Services/userService";
+import { userApi } from "../Services/userService";
+import Toast from "react-native-toast-message";
 
 const Login = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+
+  const dispatch = useDispatch();
+  const [triggerLogin] = useLoginMutation();
+
   const bounceAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -23,8 +38,45 @@ const Login = ({ navigation }) => {
     ).start();
   }, []);
 
-  const onSubmit = () => {
-    console.log("Login con Firebase");
+  const onSubmit = async () => {
+    setErrorEmail("");
+    setErrorPassword("");
+
+    if (!email.trim()) return setErrorEmail("El correo es obligatorio");
+    if (!password.trim())
+      return setErrorPassword("La contraseña es obligatoria");
+
+    try {
+      const result = await triggerLogin({ email, password }).unwrap();
+
+      const userData = await dispatch(
+        userApi.endpoints.getUserById.initiate(result.localId),
+      ).unwrap();
+
+      dispatch(
+        setUser({
+          idToken: result.idToken,
+          localId: result.localId,
+          name: userData.name,
+          phone: userData.phone,
+          email: userData.email,
+        }),
+      );
+
+      Toast.show({
+        type: "success",
+        text1: `¡Bienvenido, ${userData.name}!`,
+        text2: "Nos alegra tenerte de vuelta",
+        visibilityTime: 3000,
+      });
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Error al iniciar sesión",
+        text2: "Correo o contraseña incorrectos",
+        visibilityTime: 3000,
+      });
+    }
   };
 
   return (
@@ -40,13 +92,28 @@ const Login = ({ navigation }) => {
         </View>
 
         <View style={styles.form}>
-          <InputForm label="Correo" icon="mail" onChange={() => {}} />
+          <InputForm
+            label="Correo"
+            icon="mail"
+            value={email}
+            onChange={(value) => {
+              setEmail(value);
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              if (emailRegex.test(value)) setErrorEmail("");
+            }}
+            error={errorEmail}
+          />
 
           <InputForm
             label="Contaseña"
             icon="lock-closed"
-            onChange={() => {}}
+            value={password}
+            onChange={(value) => {
+              setPassword(value);
+              if (value.length >= 6) setErrorPassword("");
+            }}
             isSecure={true}
+            error={errorPassword}
           />
         </View>
 
@@ -103,12 +170,9 @@ const styles = StyleSheet.create({
     color: colors.text,
     marginTop: 4,
   },
-  form: {
-    marginTop: 10,
-  },
   button: {
     backgroundColor: colors.primary,
-    padding: 14,
+    padding: 12,
     borderRadius: 10,
     alignItems: "center",
     marginTop: 10,

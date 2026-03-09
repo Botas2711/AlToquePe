@@ -3,8 +3,17 @@ import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../Global/colors";
 
-const InputForm = ({ label, icon, onChange, error = "", isSecure = false }) => {
+const InputForm = ({
+  label,
+  icon,
+  onChange,
+  error = "",
+  isSecure = false,
+  keyboardType = "default",
+}) => {
   const [input, setInput] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const onChangeText = (text) => {
     setInput(text);
     onChange(text);
@@ -27,9 +36,19 @@ const InputForm = ({ label, icon, onChange, error = "", isSecure = false }) => {
         <TextInput
           value={input}
           onChangeText={onChangeText}
-          secureTextEntry={isSecure}
+          secureTextEntry={isSecure && !showPassword}
           style={styles.input}
+          keyboardType={keyboardType}
         />
+        {isSecure && (
+          <Ionicons
+            name={showPassword ? "eye-off-outline" : "eye-outline"}
+            size={21}
+            color={colors.text}
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.eyeIcon}
+          />
+        )}
       </View>
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -55,7 +74,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: colors.disable,
     borderWidth: 1,
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   },
   icon: {
     marginLeft: 6,
@@ -67,9 +87,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: colors.text,
   },
+  eyeIcon: {
+    paddingHorizontal: 5,
+  },
   error: {
     marginTop: 4,
-    color: "red",
+    color: colors.black,
     fontSize: 12,
   },
 });

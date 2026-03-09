@@ -8,8 +8,15 @@ import {
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
 import ProfileItem from "../Components/ProfileItem";
+import { useSelector } from "react-redux";
+import { logout } from "../Store/features/Auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const Profile = () => {
+  const user = useSelector((state) => state.auth.user);
+
+  const dispatch = useDispatch();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mi Perfil</Text>
@@ -22,16 +29,20 @@ const Profile = () => {
         <ProfileItem
           icon="person-outline"
           label="Nombre Completo"
-          value="Agustin Aguilar Lindo"
+          value={user.name || "Nombre no disponible"}
         />
 
         <ProfileItem
           icon="mail-outline"
           label="Correo"
-          value="agustinalex14@gmail.com"
+          value={user.email || "Correo no disponible"}
         />
 
-        <ProfileItem icon="call-outline" label="Número" value="+51 920628427" />
+        <ProfileItem
+          icon="call-outline"
+          label="Número"
+          value={user.phone ? `+51 ${user.phone}` : "Número no disponible"}
+        />
 
         <ProfileItem
           icon="location-outline"
@@ -40,7 +51,10 @@ const Profile = () => {
         />
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.logoutButton}>
+          <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={() => dispatch(logout())}
+          >
             <Text style={styles.logoutText}>Cerrar sesión</Text>
           </TouchableOpacity>
         </View>
