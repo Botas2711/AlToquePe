@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Search from "../Components/Search";
 import CategoryItem from "../Components/CategoryItem";
 import ProductItem from "../Components/ProductItem";
@@ -8,6 +8,7 @@ import {
   useGetProductsQuery,
   useGetProductsByCategoryQuery,
 } from "../Services/shopService";
+import { MARGIN, FONT, SPACING } from "../Global/layout";
 
 const Shop = ({ navigation }) => {
   const { data: categories, isLoading, error } = useGetCategoriesQuery();
@@ -55,68 +56,78 @@ const Shop = ({ navigation }) => {
     }
   };
 
-  return (
-    <>
-      <FlatList
-        data={filteredProducts}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        renderItem={({ item }) => (
-          <ProductItem
-            product={item}
-            onPress={() =>
-              navigation.navigate("ProductDetail", { product: item })
-            }
-          />
-        )}
-        ListHeaderComponent={
-          <>
-            <Search onSearch={setSearchText} />
-
-            <View style={styles.categoryContainer}>
-              <Text style={styles.categoryTitle}>Categorías</Text>
-
-              <FlatList
-                data={categories}
-                keyExtractor={(item) => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => (
-                  <CategoryItem
-                    category={item}
-                    active={item.id === activeCategoryId}
-                    onPress={() => handlePress(item)}
-                  />
-                )}
-              />
-            </View>
-          </>
-        }
-        showsVerticalScrollIndicator={false}
+  const renderItem = useCallback(
+    ({ item }) => (
+      <ProductItem
+        product={item}
+        onPress={() => navigation.navigate("ProductDetail", { product: item })}
       />
-    </>
+    ),
+    [navigation],
+  );
+
+  return (
+    <FlatList
+      data={filteredProducts}
+      removeClippedSubviews={true}
+      initialNumToRender={4}
+      keyExtractor={(item) => item.id}
+      numColumns={2}
+      columnWrapperStyle={styles.row}
+      contentContainerStyle={styles.listContent}
+      renderItem={renderItem}
+      ListHeaderComponent={
+        <View>
+          <Search onSearch={setSearchText} />
+
+          <View style={styles.categoryContainer}>
+            <Text style={styles.categoryTitle}>Categorías</Text>
+
+            <FlatList
+              data={categories}
+              keyExtractor={(item) => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.categoryList}
+              renderItem={({ item }) => (
+                <CategoryItem
+                  category={item}
+                  active={item.id === activeCategoryId}
+                  onPress={() => handlePress(item)}
+                  scrollable={true}
+                />
+              )}
+            />
+          </View>
+        </View>
+      }
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
 
 export default Shop;
 
 const styles = StyleSheet.create({
+  listContent: {
+    paddingBottom: SPACING.xl,
+  },
   categoryContainer: {
-    padding: 10,
+    paddingVertical: SPACING.sm,
+    marginTop: SPACING.sm,
   },
   categoryTitle: {
     fontFamily: "QuickSand-Bold",
-    fontSize: 16,
-    marginHorizontal: 18,
-    marginBottom: 2,
+    fontSize: FONT.lg,
+    marginHorizontal: MARGIN,
+    marginBottom: SPACING.xs,
   },
-  productList: {
-    marginHorizontal: 10,
+  categoryList: {
+    paddingHorizontal: MARGIN * 0.5,
   },
   row: {
     justifyContent: "space-between",
-    marginVertical: 5,
-    marginHorizontal: 7,
+    marginVertical: SPACING.sm,
+    marginHorizontal: MARGIN,
   },
 });

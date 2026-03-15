@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
+import { StyleSheet, Text, View, Pressable, ScrollView } from "react-native";
 import { useRef, useState } from "react";
 import InputForm from "../Components/InputForm";
 import { colors } from "../Global/colors";
@@ -6,6 +6,7 @@ import { useSignUpMutation } from "../Services/authService";
 import { useSaveUserMutation } from "../Services/userService";
 import { signupSchema } from "../Validations/signupSchema";
 import Toast from "react-native-toast-message";
+import { WIDTH, MARGIN, FONT, RADIUS, SPACING, BUTTON } from "../Global/layout";
 
 const Signup = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -86,7 +87,11 @@ const Signup = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.card}>
         <View style={styles.header}>
           <Text style={styles.title}>Crea tu cuenta</Text>
@@ -170,7 +175,7 @@ const Signup = ({ navigation }) => {
           </Pressable>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -178,57 +183,58 @@ export default Signup;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: "center",
-    padding: 20,
+    padding: MARGIN,
   },
   card: {
     backgroundColor: colors.background,
-    borderRadius: 20,
-    padding: 24,
+    borderRadius: RADIUS.xl,
+    padding: MARGIN * 1.2,
     shadowOpacity: 0.08,
     shadowRadius: 10,
     elevation: 5,
   },
   header: {
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: SPACING.md,
   },
   title: {
-    fontSize: 22,
+    fontSize: FONT.xl,
     fontFamily: "QuickSand-Bold",
     color: colors.black,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: FONT.sm,
     fontFamily: "QuickSand-Medium",
     color: colors.text,
-    marginTop: 4,
+    marginTop: SPACING.xs,
   },
   form: {
-    marginTop: 3,
+    marginTop: SPACING.xs,
   },
   button: {
     backgroundColor: colors.primary,
-    padding: 12,
-    borderRadius: 10,
+    height: BUTTON.height,
+    borderRadius: BUTTON.borderRadius,
     alignItems: "center",
-    marginTop: 10,
+    justifyContent: "center",
+    marginTop: SPACING.sm,
   },
   buttonText: {
     color: "white",
-    fontSize: 16,
+    fontSize: FONT.md,
     fontFamily: "QuickSand-SemiBold",
   },
   footer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 20,
+    marginTop: SPACING.lg,
+    gap: SPACING.xs,
   },
   footerText: {
     fontFamily: "QuickSand-Medium",
     color: colors.text,
-    marginRight: 5,
   },
   login: {
     color: colors.primary,

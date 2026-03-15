@@ -3,7 +3,7 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Dimensions,
+  ScrollView,
 } from "react-native";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -11,6 +11,17 @@ import ProfileItem from "../Components/ProfileItem";
 import { useSelector } from "react-redux";
 import { logout } from "../Store/features/Auth/authSlice";
 import { useDispatch } from "react-redux";
+import {
+  WIDTH,
+  HEIGHT,
+  MARGIN,
+  FONT,
+  RADIUS,
+  SPACING,
+  BUTTON,
+} from "../Global/layout";
+
+const AVATAR_SIZE = WIDTH * 0.25;
 
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
@@ -18,11 +29,15 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.content}
+    >
       <Text style={styles.title}>Mi Perfil</Text>
 
       <View style={styles.avatarContainer}>
-        <Ionicons name="person" size={50} color={colors.black} />
+        <Ionicons name="person" size={AVATAR_SIZE * 0.5} color={colors.black} />
       </View>
 
       <View style={styles.infoContainer}>
@@ -59,7 +74,7 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -68,7 +83,10 @@ export default Profile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
+    paddingHorizontal: MARGIN,
+  },
+  content: {
+    paddingBottom: SPACING.xl,
   },
   title: {
     fontFamily: "QuickSand-Bold",

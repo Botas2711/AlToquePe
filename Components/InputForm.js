@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TextInput } from "react-native";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../Global/colors";
+import { WIDTH, FONT, RADIUS, SPACING } from "../Global/layout";
 
 const InputForm = ({
   label,
@@ -27,7 +28,7 @@ const InputForm = ({
         {icon && (
           <Ionicons
             name={icon}
-            size={21}
+            size={WIDTH * 0.052}
             color={colors.primary}
             style={styles.icon}
           />
@@ -43,7 +44,7 @@ const InputForm = ({
         {isSecure && (
           <Ionicons
             name={showPassword ? "eye-off-outline" : "eye-outline"}
-            size={21}
+            size={WIDTH * 0.052}
             color={colors.text}
             onPress={() => setShowPassword(!showPassword)}
             style={styles.eyeIcon}
@@ -60,39 +61,44 @@ export default InputForm;
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginBottom: 18,
+    marginBottom: SPACING.md,
   },
   label: {
     fontFamily: "QuickSand-Medium",
-    fontSize: 14,
+    fontSize: FONT.sm,
     color: colors.primary,
-    marginBottom: 6,
+    marginBottom: SPACING.xs,
   },
   container: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 10,
+    borderRadius: RADIUS.md,
     borderColor: colors.disable,
     borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.xs,
+    height: WIDTH * 0.12,
+  },
+  containerError: {
+    borderColor: colors.primary,
   },
   icon: {
-    marginLeft: 6,
+    marginLeft: SPACING.xs,
   },
   input: {
     flex: 1,
-    marginLeft: 14,
+    marginLeft: SPACING.md,
     fontFamily: "QuickSand-SemiBold",
-    fontSize: 15,
+    fontSize: FONT.sm,
     color: colors.text,
   },
   eyeIcon: {
-    paddingHorizontal: 5,
+    paddingHorizontal: SPACING.xs,
   },
   error: {
-    marginTop: 4,
-    color: colors.black,
-    fontSize: 12,
+    marginTop: SPACING.xs,
+    color: colors.text,
+    fontSize: FONT.xs,
+    fontFamily: "QuickSand-Medium",
   },
 });

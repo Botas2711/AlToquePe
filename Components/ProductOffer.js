@@ -1,15 +1,17 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Pressable,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { colors } from "../Global/colors";
+import {
+  WIDTH,
+  MARGIN,
+  FONT,
+  RADIUS,
+  SPACING,
+  SLIDER_HEIGHT,
+} from "../Global/layout";
 
-const { width } = Dimensions.get("window");
+const SLIDER_WIDTH = WIDTH - MARGIN * 2;
+const IMAGE_SIZE = SLIDER_HEIGHT * 0.85;
 
 const ProductOffer = ({ product, onPress }) => {
   return (
@@ -42,59 +44,61 @@ export default ProductOffer;
 
 const styles = StyleSheet.create({
   boxContainer: {
-    width: width * 0.85,
+    width: SLIDER_WIDTH,
+    height: SLIDER_HEIGHT,
     flexDirection: "row",
-    borderRadius: 20,
-    padding: 16,
+    borderRadius: RADIUS.xl,
+    padding: SPACING.md,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: width * 0.075,
+    marginHorizontal: MARGIN,
+    marginVertical: SPACING.sm,
   },
   info: {
-    width: "60%",
+    flex: 1,
+    paddingRight: SPACING.sm,
   },
   brand: {
-    fontSize: 13,
+    fontSize: FONT.xs,
     fontFamily: "QuickSand-Medium",
     color: colors.black,
   },
   title: {
-    fontSize: 15,
-    marginVertical: 4,
+    fontSize: FONT.sm,
+    marginVertical: SPACING.xs,
     fontFamily: "QuickSand-SemiBold",
     color: colors.black,
   },
   prices: {
     flexDirection: "column",
-    marginVertical: 4,
+    marginVertical: SPACING.xs,
   },
   oldPrice: {
     textDecorationLine: "line-through",
     color: colors.text,
     fontFamily: "QuickSand-Regular",
-    fontSize: 11,
+    fontSize: FONT.xs,
   },
-
   newPrice: {
-    fontSize: 15,
+    fontSize: FONT.md,
     fontFamily: "QuickSand-SemiBold",
   },
   button: {
     backgroundColor: colors.primary,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    borderRadius: 10,
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.md,
+    borderRadius: RADIUS.sm,
     alignSelf: "flex-start",
-    marginTop: 6,
+    marginTop: SPACING.sm,
   },
   buttonText: {
     color: colors.background,
     fontFamily: "QuickSand-Regular",
-    fontSize: 11,
+    fontSize: FONT.xs,
   },
   image: {
-    width: 130,
-    height: 100,
+    width: IMAGE_SIZE,
+    height: IMAGE_SIZE * 0.75,
     resizeMode: "contain",
   },
 });

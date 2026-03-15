@@ -10,6 +10,17 @@ import {
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
+import {
+  WIDTH,
+  MARGIN,
+  FONT,
+  RADIUS,
+  SPACING,
+  HEADER_HEIGHT,
+} from "../Global/layout";
+
+const LOGO_SIZE = WIDTH * 0.062;
+const CART_SIZE = WIDTH * 0.078;
 
 const Header = () => {
   const total = useSelector((state) =>
@@ -25,7 +36,7 @@ const Header = () => {
           <Ionicons
             style={styles.option}
             name="caret-down-outline"
-            size={12}
+            size={WIDTH * 0.03}
             color={colors.text}
           />
         </View>
@@ -38,11 +49,15 @@ const Header = () => {
         <Text style={styles.title}>AlToquePe</Text>
       </View>
       <View style={styles.cartContainer}>
-        <Ionicons name="cart-outline" size={18} color={colors.background} />
+        <Ionicons
+          name="cart-outline"
+          size={WIDTH * 0.045}
+          color={colors.background}
+        />
 
         {total > 0 && (
           <View style={styles.badge}>
-            <Text style={styles.badgeText}>{total}</Text>
+            <Text style={styles.badgeText}>{total > 99 ? "99+" : total}</Text>
           </View>
         )}
       </View>
@@ -57,12 +72,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: colors.background,
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
     width: "100%",
-    height: 82,
+    height: HEADER_HEIGHT,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
+    paddingHorizontal: MARGIN * 1.2,
+    borderBottomLeftRadius: RADIUS.xl,
+    borderBottomRightRadius: RADIUS.xl,
     overflow: "hidden",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.35,
@@ -71,44 +87,42 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   logo: {
-    width: 25,
-    height: 25,
+    width: LOGO_SIZE,
+    height: LOGO_SIZE,
     resizeMode: "contain",
   },
   title: {
-    fontSize: 17,
+    fontSize: FONT.md,
     color: colors.text,
     fontFamily: "QuickSand-Bold",
   },
   main: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    gap: 3,
+    gap: SPACING.xs,
   },
   cartContainer: {
-    width: 30,
-    height: 30,
-    borderRadius: 20,
+    width: CART_SIZE,
+    height: CART_SIZE,
+    borderRadius: CART_SIZE / 2,
     backgroundColor: colors.text,
     alignItems: "center",
     justifyContent: "center",
-    position: "relative",
   },
   badge: {
     position: "absolute",
-    top: -7,
-    right: -7,
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+    top: -SPACING.xs,
+    right: -SPACING.xs,
+    minWidth: WIDTH * 0.045,
+    height: WIDTH * 0.045,
+    borderRadius: WIDTH * 0.023,
     backgroundColor: colors.secondary,
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 2,
   },
-
   badgeText: {
-    fontSize: 10,
+    fontSize: FONT.xs,
     fontFamily: "QuickSand-Bold",
     color: colors.text,
   },
@@ -116,21 +130,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   label: {
-    fontSize: 13,
+    fontSize: FONT.sm,
     color: colors.primary,
     fontFamily: "QuickSand-SemiBold",
   },
   location: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 3,
+    gap: SPACING.xs,
   },
   place: {
-    fontSize: 12,
+    fontSize: FONT.xs,
     color: colors.text,
     fontFamily: "QuickSand-Bold",
   },
   option: {
-    marginTop: 3,
+    marginTop: 2,
   },
 });

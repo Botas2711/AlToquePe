@@ -6,8 +6,10 @@ import HomeStack from "./HomeStack";
 import ShopStack from "./ShopStack";
 import CartStack from "./CartStack";
 import ProfileStack from "./ProfileStack";
+import { WIDTH, TAB_HEIGHT } from "../Global/layout";
 
 const Tab = createBottomTabNavigator();
+const ICON_SIZE = WIDTH * 0.065;
 
 const TabNavigator = () => {
   return (
@@ -30,7 +32,7 @@ const TabNavigator = () => {
           return (
             <Ionicons
               name={iconName}
-              size={26}
+              size={ICON_SIZE}
               color={focused ? colors.primary : colors.black}
             />
           );
@@ -50,10 +52,13 @@ export default TabNavigator;
 const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: colors.background,
-    height: 70,
+    height: TAB_HEIGHT,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     elevation: 8,
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: -3 },
   },
 });

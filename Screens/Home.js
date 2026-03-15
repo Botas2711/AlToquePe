@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import ProductOfferSlider from "../Components/ProductOfferSlider";
 import CategoryItem from "../Components/CategoryItem";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ProductItem from "../Components/ProductItem";
 import {
   useGetCategoriesQuery,
   useGetProductsByCategoryQuery,
 } from "../Services/shopService";
+import { WIDTH, MARGIN, FONT, SPACING } from "../Global/layout";
 
 const Home = ({ navigation }) => {
   const { data: categories, isLoading, error } = useGetCategoriesQuery();
@@ -18,12 +19,9 @@ const Home = ({ navigation }) => {
     }
   }, [categories]);
 
-  const { data: products } = useGetProductsByCategoryQuery(
-    selectedCategory,
-    {
-      skip: !selectedCategory,
-    },
-  );
+  const { data: products } = useGetProductsByCategoryQuery(selectedCategory, {
+    skip: !selectedCategory,
+  });
 
   const handlePress = (category) => {
     setSelectedCategory(category);
@@ -33,69 +31,75 @@ const Home = ({ navigation }) => {
 
   const activeCategoryId = selectedCategory?.id;
 
-  return (
-    <>
-      <FlatList
-        data={products}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        renderItem={({ item }) => (
-          <ProductItem
-            product={item}
-            onPress={() =>
-              navigation.navigate("ProductDetail", { product: item })
-            }
-          />
-        )}
-        ListHeaderComponent={
-          <>
-            <ProductOfferSlider navigation={navigation}/>
-
-            <View style={styles.categoryContainer}>
-              <Text style={styles.categoryTitle}>Categorías populares</Text>
-
-              <FlatList
-                data={categoriesPopulares}
-                keyExtractor={(item) => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => (
-                  <CategoryItem
-                    category={item}
-                    active={item.id === activeCategoryId}
-                    onPress={() => handlePress(item)}
-                  />
-                )}
-              />
-            </View>
-          </>
-        }
-        showsVerticalScrollIndicator={false}
+  const renderItem = useCallback(
+    ({ item }) => (
+      <ProductItem
+        product={item}
+        onPress={() => navigation.navigate("ProductDetail", { product: item })}
       />
-    </>
+    ),
+    [navigation],
+  );
+
+  return (
+    <FlatList
+      data={products}
+      removeClippedSubviews={true}
+      initialNumToRender={4}
+      keyExtractor={(item) => item.id}
+      numColumns={2}
+      columnWrapperStyle={styles.row}
+      contentContainerStyle={styles.listContent}
+      renderItem={renderItem}
+      ListHeaderComponent={
+        <View>
+          <ProductOfferSlider navigation={navigation} />
+
+          <View style={styles.categoryContainer}>
+            <Text style={styles.categoryTitle}>Categorías populares</Text>
+
+            <View style={styles.categoryRow}>
+              {categoriesPopulares.map((item) => (
+                <CategoryItem
+                  key={item.id}
+                  category={item}
+                  active={item.id === activeCategoryId}
+                  onPress={() => setSelectedCategory(item)}
+                />
+              ))}
+            </View>
+          </View>
+        </View>
+      }
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
+  listContent: {
+    paddingBottom: SPACING.xl,
+  },
   categoryContainer: {
-    padding: 10,
-    marginTop: 15,
+    paddingVertical: SPACING.sm,
+    marginTop: SPACING.sm,
   },
   categoryTitle: {
     fontFamily: "QuickSand-Bold",
-    fontSize: 16,
-    marginHorizontal: 18,
-    marginBottom: 2,
+    fontSize: FONT.lg,
+    marginHorizontal: MARGIN,
+    marginBottom: SPACING.xs,
   },
-  productList: {
-    marginHorizontal: 10,
+  categoryRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: MARGIN,
   },
   row: {
     justifyContent: "space-between",
-    marginVertical: 5,
-    marginHorizontal: 7,
+    marginVertical: SPACING.sm,
+    marginHorizontal: MARGIN,
   },
 });

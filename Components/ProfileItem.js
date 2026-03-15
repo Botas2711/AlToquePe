@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { WIDTH, MARGIN, FONT, RADIUS, SPACING } from "../Global/layout";
 
 const ProfileItem = ({ icon, label, value }) => {
   return (
@@ -20,27 +21,27 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 18,
-    borderRadius: 10,
+    marginBottom: SPACING.md,
+    borderRadius: RADIUS.md,
     borderColor: colors.disable,
     borderWidth: 1,
-    padding: 10,
+    padding: SPACING.sm,
   },
   icon: {
-    marginLeft: 6,
+    marginLeft: SPACING.xs,
   },
   textContainer: {
-    marginLeft: 17,
+    marginLeft: SPACING.lg,
   },
   label: {
     fontFamily: "QuickSand-Medium",
-    fontSize: 14,
+    fontSize: FONT.sm,
     color: colors.primary,
   },
   value: {
     fontFamily: "QuickSand-SemiBold",
-    fontSize: 15,
+    fontSize: FONT.md,
     color: colors.text,
-    marginTop: 2,
+    marginTop: SPACING.xs,
   },
 });

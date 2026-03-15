@@ -9,14 +9,26 @@ import CartItem from "../Components/CartItem";
 import { colors } from "../Global/colors";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
+import {
+  WIDTH,
+  HEIGHT,
+  MARGIN,
+  FONT,
+  RADIUS,
+  SPACING,
+  BUTTON,
+} from "../Global/layout";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
 
   const totalPrice = useMemo(() => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    return cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0,
+    );
   }, [cartItems]);
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Mi Carrito</Text>
@@ -26,18 +38,28 @@ const Cart = () => {
         renderItem={({ item }) => <CartItem product={item} />}
         contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 50 }}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>Tu carrito está vacío</Text>
+            <Text style={styles.emptySubText}>
+              Agrega productos para continuar
+            </Text>
+          </View>
+        }
       />
 
-      <View style={styles.footer}>
-        <View style={styles.totalContainer}>
-          <Text style={styles.totalLabel}>Total</Text>
-          <Text style={styles.totalPrice}>S/{totalPrice.toFixed(2)}</Text>
-        </View>
+      {cartItems.length > 0 && (
+        <View style={styles.footer}>
+          <View style={styles.totalContainer}>
+            <Text style={styles.totalLabel}>Total</Text>
+            <Text style={styles.totalPrice}>S/{totalPrice.toFixed(2)}</Text>
+          </View>
 
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Ordenar ahora</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Ordenar ahora</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
@@ -50,48 +72,70 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "QuickSand-Bold",
-    fontSize: 20,
+    fontSize: FONT.xl,
     textAlign: "center",
     color: colors.black,
-    marginTop: 17,
-    paddingTop: 15,
-    paddingBottom: 12,
+    marginTop: HEIGHT * 0.02,
+    paddingVertical: SPACING.md,
+  },
+  listContent: {
+    paddingHorizontal: MARGIN,
+    paddingBottom: SPACING.xl,
+  },
+  emptyContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: HEIGHT * 0.15,
+    gap: SPACING.sm,
+  },
+  emptyText: {
+    fontFamily: "QuickSand-Bold",
+    fontSize: FONT.lg,
+    color: colors.black,
+  },
+  emptySubText: {
+    fontFamily: "QuickSand-Medium",
+    fontSize: FONT.sm,
+    color: colors.text,
   },
   footer: {
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 17,
+    gap: SPACING.sm,
+    padding: MARGIN,
     backgroundColor: colors.background,
+    borderTopLeftRadius: RADIUS.xl,
+    borderTopRightRadius: RADIUS.xl,
+    elevation: 8,
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: -3 },
   },
   totalContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "100%",
-    paddingHorizontal: 15,
-    marginBottom: 8,
+    paddingHorizontal: SPACING.sm,
   },
   totalLabel: {
     fontFamily: "QuickSand-Bold",
-    fontSize: 16,
+    fontSize: FONT.md,
     color: colors.black,
   },
   totalPrice: {
     fontFamily: "QuickSand-Bold",
-    fontSize: 18,
+    fontSize: FONT.lg,
     color: colors.black,
   },
   button: {
     backgroundColor: colors.primary,
     width: "100%",
-    paddingVertical: 12,
-    borderRadius: 10,
+    height: BUTTON.height,
+    borderRadius: BUTTON.borderRadius,
+    alignItems: "center",
+    justifyContent: "center",
   },
-
   buttonText: {
     fontFamily: "QuickSand-Bold",
-    textAlign: "center",
     color: colors.background,
-    fontSize: 15,
+    fontSize: FONT.md,
   },
 });

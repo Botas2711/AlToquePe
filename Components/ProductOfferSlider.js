@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, FlatList, Dimensions } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import ProductOffer from "./ProductOffer";
 import { useState } from "react";
 import { colors } from "../Global/colors";
 import { useGetProductsQuery } from "../Services/shopService";
+import { WIDTH, MARGIN, SPACING, SLIDER_HEIGHT } from "../Global/layout";
 
-const { width } = Dimensions.get("window");
-const ITEM_WIDTH = width - 32;
+const SLIDER_WIDTH = WIDTH - MARGIN * 2;
 
 const ProductOfferSlider = ({ navigation }) => {
   const { data: products = [], isLoading, error } = useGetProductsQuery();
@@ -16,14 +16,13 @@ const ProductOfferSlider = ({ navigation }) => {
 
   const handleScroll = (event) => {
     const offsetX = event.nativeEvent.contentOffset.x;
-    const index = Math.round(offsetX / ITEM_WIDTH);
+    const index = Math.round(offsetX / SLIDER_WIDTH);
     setActiveIndex(index);
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
-        style={styles.slide}
         data={productsForSlider}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -37,6 +36,9 @@ const ProductOfferSlider = ({ navigation }) => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
+        scrollEventThrottle={16}
+        snapToInterval={SLIDER_WIDTH + MARGIN * 2}
+        decelerationRate="fast"
         onScroll={handleScroll}
       />
       <View style={styles.dotsContainer}>
@@ -54,13 +56,17 @@ const ProductOfferSlider = ({ navigation }) => {
 export default ProductOfferSlider;
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: SPACING.lg,
+    height: SLIDER_HEIGHT + SPACING.xl,
+  },
   slide: {
     marginTop: 25,
   },
   dotsContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 12,
+    marginTop: SPACING.md,
   },
   dot: {
     width: 7,

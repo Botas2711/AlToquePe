@@ -1,15 +1,6 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  Image,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import { colors } from "../Global/colors";
-
-const { width } = Dimensions.get("window");
-const ITEM_WIDTH = width / 2 - 10;
+import { ITEM_WIDTH, ITEM_IMAGE_SIZE, FONT, RADIUS, SPACING } from "../Global/layout";
 
 const ProductItem = ({ product, onPress }) => {
   return (
@@ -18,7 +9,7 @@ const ProductItem = ({ product, onPress }) => {
         <Image source={{ uri: product.image }} style={styles.image} />
       </Pressable>
 
-      <Text style={styles.name}>{product.name}</Text>
+      <Text style={styles.name} numberOfLines={2}>{product.name}</Text>
 
       <View style={styles.prices}>
         {product.newPrice ? (
@@ -38,43 +29,48 @@ export default ProductItem;
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
     width: ITEM_WIDTH,
+    alignItems: "center",
+    marginBottom: SPACING.sm,
   },
   imageContainer: {
     backgroundColor: colors.background,
-    borderRadius: 15,
-    padding: 15,
-    marginBottom: 10,
+    borderRadius: RADIUS.lg,
+    padding: SPACING.md,
+    marginBottom: SPACING.sm,
+    width: ITEM_WIDTH,
+    height: ITEM_WIDTH,
+    alignItems: "center",
+    justifyContent: "center",
   },
   image: {
-    width: ITEM_WIDTH * 0.7,
-    height: ITEM_WIDTH * 0.7,
+    width: ITEM_WIDTH - SPACING.md * 2,
+    height: ITEM_IMAGE_SIZE,
     resizeMode: "contain",
   },
   name: {
-    fontSize: 13,
+    fontSize: FONT.sm,
     fontFamily: "QuickSand-Bold",
     color: colors.black,
     textAlign: "left",
-    marginBottom: 6,
-    width: "80%",
+    marginBottom: SPACING.xs,
+    width: "90%",
   },
   prices: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    width: "80%",
-    marginBottom: 15,
+    width: "90%",
+    marginBottom: SPACING.xs,
+    gap: SPACING.sm,
   },
   newPrice: {
-    fontSize: 13,
-    fontFamily: "QuickSand-Medium",
+    fontSize: FONT.sm,
+    fontFamily: "QuickSand-SemiBold",
     color: colors.black,
-    marginRight: 9,
   },
   oldPrice: {
-    fontSize: 12,
+    fontSize: FONT.xs,
     fontFamily: "QuickSand-Light",
     color: colors.text,
     textDecorationLine: "line-through",

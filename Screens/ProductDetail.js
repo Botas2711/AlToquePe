@@ -5,15 +5,21 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  Dimensions,
 } from "react-native";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../Store/features/Cart/cartSlice";
-
-const { width } = Dimensions.get("window");
-const ITEM_WIDTH = width * 0.85;
+import {
+  WIDTH,
+  MARGIN,
+  FONT,
+  RADIUS,
+  SPACING,
+  DETAIL_IMAGE_HEIGHT,
+  DETAIL_IMAGE_WIDTH,
+  BUTTON,
+} from "../Global/layout";
 
 const ProductDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -27,7 +33,7 @@ const ProductDetail = ({ navigation, route }) => {
         style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="chevron-back" size={26} color={colors.black} />
+        <Ionicons name="chevron-back" size={WIDTH * 0.065} color={colors.black} />
       </TouchableOpacity>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -41,12 +47,12 @@ const ProductDetail = ({ navigation, route }) => {
 
           <View style={styles.row}>
             <View style={styles.iconRow}>
-              <Ionicons name="star" size={20} color={colors.secondary} />
+              <Ionicons name="star" size={WIDTH * 0.05} color={colors.secondary} />
               <Text style={styles.smallText}> {product.rating}</Text>
             </View>
 
             <View style={styles.iconRow}>
-              <Ionicons name="thumbs-up-sharp" size={20} color={colors.like} />
+              <Ionicons name="thumbs-up-sharp" size={WIDTH * 0.05} color={colors.like} />
               <Text style={styles.smallText}> {product.likes}%</Text>
             </View>
           </View>
@@ -96,96 +102,103 @@ const styles = StyleSheet.create({
   backButton: {
     position: "absolute",
     backgroundColor: colors.background,
-    borderRadius: 20,
-    padding: 8,
-    top: 35,
-    left: 20,
+    borderRadius: RADIUS.full,
+    padding: SPACING.sm,
+    top: SPACING.xl,
+    left: MARGIN,
     zIndex: 10,
+    elevation: 3,
   },
   imageContainer: {
     alignItems: "center",
     justifyContent: "center",
-    padding: 15,
-    marginTop: 50,
-    marginBottom: 15,
+    paddingHorizontal: MARGIN,
+    marginTop: SPACING.xl * 2,
+    marginBottom: SPACING.md,
   },
   image: {
     resizeMode: "contain",
-    width: ITEM_WIDTH,
-    height: 320,
+    width: DETAIL_IMAGE_WIDTH,
+    height: DETAIL_IMAGE_HEIGHT,
   },
   infoContainer: {
-    padding: 25,
+    padding: MARGIN * 1.5,
     backgroundColor: colors.background,
   },
   name: {
     fontFamily: "QuickSand-Bold",
-    fontSize: 20,
-    marginBottom: 10,
+    fontSize: FONT.xl,
+    marginBottom: SPACING.sm,
   },
   brand: {
     fontFamily: "QuickSand-Medium",
-    fontSize: 16,
-    marginBottom: 15,
+    fontSize: FONT.md,
+    marginBottom: SPACING.md,
   },
   row: {
     flexDirection: "row",
-    gap: 25,
-    marginBottom: 15,
+    gap: SPACING.xl,
+    marginBottom: SPACING.md,
     justifyContent: "flex-start",
   },
   iconRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 2,
+    gap: SPACING.xs,
   },
   smallText: {
-    fontSize: 15,
+    fontSize: FONT.md,
     fontFamily: "QuickSand-Medium",
   },
   description: {
-    fontSize: 14,
+    fontSize: FONT.md,
     fontFamily: "QuickSand-Regular",
     color: colors.text,
     textAlign: "justify",
-    paddingRight: 10,
-    marginBottom: 8,
+    lineHeight: FONT.sm * 1.4,
+    marginBottom: SPACING.sm,
   },
   bottomContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    gap: 15,
-    padding: 20,
+    paddingHorizontal: MARGIN * 1.5,
+    paddingVertical: SPACING.md,
     borderTopWidth: 1,
     borderColor: colors.background,
     backgroundColor: colors.background,
   },
   newPrice: {
-    fontSize: 18,
+    fontSize: FONT.xl,
     fontFamily: "QuickSand-Bold",
     color: colors.black,
   },
   oldPrice: {
-    fontSize: 14,
+    fontSize: FONT.sm,
     textDecorationLine: "line-through",
     color: colors.text,
   },
   button: {
     backgroundColor: colors.primary,
-    paddingVertical: 12,
-    paddingHorizontal: 60,
-    borderRadius: 10,
+    paddingVertical: BUTTON.height * 0.25,
+    paddingHorizontal: MARGIN * 3,
+    borderRadius: BUTTON.borderRadius,
+    flex: 1,
+    marginLeft: MARGIN,
+    alignItems: "center",
   },
   buttonDisabled: {
     backgroundColor: colors.disable,
-    paddingVertical: 12,
-    paddingHorizontal: 80,
-    borderRadius: 10,
+    paddingVertical: BUTTON.height * 0.25,
+    paddingHorizontal: MARGIN * 3,
+    borderRadius: BUTTON.borderRadius,
+    flex: 1,
+    marginLeft: MARGIN,
+    alignItems: "center",
   },
   buttonText: {
     fontFamily: "QuickSand-Bold",
     color: colors.background,
-    fontSize: 15,
+    fontSize: FONT.md,
   },
 });

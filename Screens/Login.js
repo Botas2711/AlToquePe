@@ -8,6 +8,17 @@ import { useLoginMutation } from "../Services/authService";
 import { useGetUserByIdQuery } from "../Services/userService";
 import { userApi } from "../Services/userService";
 import Toast from "react-native-toast-message";
+import {
+  WIDTH,
+  HEIGHT,
+  MARGIN,
+  FONT,
+  RADIUS,
+  SPACING,
+  BUTTON,
+} from "../Global/layout";
+
+const LOGO_SIZE = WIDTH * 0.2;
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -139,58 +150,63 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    padding: 20,
+    padding: MARGIN,
   },
   card: {
     backgroundColor: colors.background,
-    borderRadius: 20,
-    padding: 24,
+    borderRadius: RADIUS.xl,
+    padding: MARGIN * 1.2,
     shadowOpacity: 0.08,
     shadowRadius: 10,
     elevation: 5,
   },
   header: {
     alignItems: "center",
-    marginBottom: 25,
+    marginBottom: SPACING.lg,
   },
   logo: {
-    width: 80,
-    height: 80,
-    marginBottom: 10,
+    width: LOGO_SIZE,
+    height: LOGO_SIZE,
+    marginBottom: SPACING.md,
     resizeMode: "contain",
   },
   title: {
     fontFamily: "QuickSand-Bold",
-    fontSize: 22,
+    fontSize: FONT.xl,
     color: colors.black,
+    textAlign: "center",
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: FONT.sm,
     fontFamily: "QuickSand-Medium",
     color: colors.text,
-    marginTop: 4,
+    marginTop: SPACING.xs,
+  },
+  form: {
+    marginTop: SPACING.sm,
   },
   button: {
     backgroundColor: colors.primary,
-    padding: 12,
-    borderRadius: 10,
+    height: BUTTON.height,
+    borderRadius: BUTTON.borderRadius,
     alignItems: "center",
-    marginTop: 10,
+    justifyContent: "center",
+    marginTop: SPACING.xs,
   },
   buttonText: {
     color: "white",
-    fontSize: 16,
+    fontSize: FONT.md,
     fontFamily: "QuickSand-SemiBold",
   },
   footer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 20,
+    marginTop: SPACING.lg,
+    gap: SPACING.xs,
   },
   footerText: {
     fontFamily: "QuickSand-Medium",
     color: colors.text,
-    marginRight: 5,
   },
   register: {
     color: colors.primary,

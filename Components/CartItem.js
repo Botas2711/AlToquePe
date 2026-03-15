@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,9 +7,9 @@ import {
   decreaseQuantity,
   removeFromCart,
 } from "../Store/features/Cart/cartSlice";
+import { WIDTH, MARGIN, FONT, RADIUS, SPACING } from "../Global/layout";
 
-const { width } = Dimensions.get("window");
-const ITEM_WIDTH = width / 4;
+const IMAGE_SIZE = WIDTH * 0.22;
 
 const CartItem = ({ product }) => {
   const dispatch = useDispatch();
@@ -34,11 +27,18 @@ const CartItem = ({ product }) => {
 
         <View style={styles.quantityContainer}>
           <TouchableOpacity
-            style={styles.qtyButton}
+            style={[
+              styles.qtyButton,
+              product.quantity === 1 && styles.qtyButtonDisabled,
+            ]}
             disabled={product.quantity === 1}
             onPress={() => dispatch(decreaseQuantity(product))}
           >
-            <Ionicons name="remove" size={18} color={colors.primary} />
+            <Ionicons
+              name="remove"
+              size={WIDTH * 0.045}
+              color={colors.primary}
+            />
           </TouchableOpacity>
 
           <Text style={styles.quantity}>{product.quantity}</Text>
@@ -47,7 +47,7 @@ const CartItem = ({ product }) => {
             style={styles.qtyButton}
             onPress={() => dispatch(increaseQuantity(product))}
           >
-            <Ionicons name="add" size={18} color={colors.primary} />
+            <Ionicons name="add" size={WIDTH * 0.045} color={colors.primary} />
           </TouchableOpacity>
         </View>
       </View>
@@ -56,7 +56,11 @@ const CartItem = ({ product }) => {
         style={styles.deleteButton}
         onPress={() => dispatch(removeFromCart(product))}
       >
-        <Ionicons name="trash-outline" size={20} color={colors.primary} />
+        <Ionicons
+          name="trash-outline"
+          size={WIDTH * 0.052}
+          color={colors.primary}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -67,10 +71,10 @@ export default CartItem;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    padding: 12,
+    padding: SPACING.md,
     backgroundColor: colors.background,
-    borderRadius: 15,
-    marginVertical: 9,
+    borderRadius: RADIUS.lg,
+    marginVertical: SPACING.sm,
     alignItems: "center",
     shadowColor: colors.text,
     shadowOffset: { width: 0, height: 2 },
@@ -79,40 +83,47 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   image: {
-    width: ITEM_WIDTH,
-    height: 80,
+    width: IMAGE_SIZE,
+    height: IMAGE_SIZE,
     resizeMode: "contain",
   },
   infoContainer: {
     flex: 1,
-    marginLeft: 13,
+    marginLeft: SPACING.md,
   },
   name: {
-    fontSize: 14,
+    fontSize: FONT.sm,
     fontFamily: "QuickSand-SemiBold",
-    marginBottom: 3,
+    marginBottom: SPACING.xs,
     color: colors.text,
   },
   price: {
-    fontSize: 15,
+    fontSize: FONT.md,
     fontFamily: "QuickSand-Bold",
     color: colors.black,
-    marginBottom: 8,
+    marginBottom: SPACING.sm,
   },
   quantityContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
+    gap: SPACING.md,
   },
   qtyButton: {
-    padding: 3,
-    borderRadius: 8,
+    padding: SPACING.xs,
+    borderRadius: RADIUS.sm,
+    borderWidth: 1,
+    borderColor: colors.primary,
+  },
+  qtyButtonDisabled: {
+    borderColor: colors.disable,
   },
   quantity: {
-    fontSize: 15,
+    fontSize: FONT.md,
     fontFamily: "QuickSand-Bold",
+    minWidth: WIDTH * 0.05,
+    textAlign: "center",
   },
   deleteButton: {
-    padding: 8,
+    padding: SPACING.sm,
   },
 });

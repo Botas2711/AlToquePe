@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, TextInput, Pressable } from "react-native";
 import { useState } from "react";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
+import { MARGIN, FONT, RADIUS, SPACING, WIDTH } from "../Global/layout";
 
 const Search = ({ onSearch }) => {
   const [input, setInput] = useState("");
-
 
   const removeInput = () => {
     setInput("");
@@ -15,14 +15,14 @@ const Search = ({ onSearch }) => {
   const handlerInputChange = (text) => {
     setInput(text);
     onSearch(text);
-  }
+  };
 
   return (
     <View style={styles.container}>
       <Ionicons
         style={styles.searchIcon}
         name="search-outline"
-        size={20}
+        size={WIDTH * 0.052}
         color={colors.text}
       />
 
@@ -37,7 +37,11 @@ const Search = ({ onSearch }) => {
 
       {input.length > 0 && (
         <Pressable onPress={removeInput} style={styles.clearButton}>
-          <Ionicons name="close-circle" size={22} color={colors.text} />
+          <Ionicons
+            name="close-circle"
+            size={WIDTH * 0.056}
+            color={colors.text}
+          />
         </Pressable>
       )}
     </View>
@@ -51,26 +55,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colors.background,
-    marginHorizontal: 22,
-    marginTop: 22,
-    marginBottom: 10,
-    paddingHorizontal: 12,
-    height: 45,
-    borderRadius: 15,
+    marginHorizontal: MARGIN,
+    marginTop: MARGIN,
+    marginBottom: SPACING.sm,
+    paddingHorizontal: SPACING.md,
+    height: WIDTH * 0.12,
+    borderRadius: RADIUS.lg,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
   },
   searchIcon: {
-    marginRight: 9,
+    marginRight: SPACING.sm,
   },
   input: {
     flex: 1,
-    fontSize: 14,
+    fontSize: FONT.sm,
+    fontFamily: "QuickSand-Medium",
     color: colors.text,
   },
   clearButton: {
-    marginLeft: 8,
+    marginLeft: SPACING.sm,
   },
 });
