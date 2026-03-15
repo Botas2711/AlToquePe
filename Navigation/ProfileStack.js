@@ -1,6 +1,7 @@
 import Header from "../Components/Header";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Profile from "../Screens/Profile";
+import ImageSelector from "../Components/ImageSelector";
 import { StatusBar } from "react-native";
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,11 @@ export default function ProfileStack() {
           name="Profile"
           component={Profile}
           options={{ title: "Profile", headerShown: false }}
+        />
+        <Stack.Screen
+          name="ImageSelector"
+          component={ImageSelector}
+          options={{ title: "ImageSelector", headerShown: false }}
         />
       </Stack.Navigator>
     </>

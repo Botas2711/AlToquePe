@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+  import { createSlice } from "@reduxjs/toolkit";
 
 const authSlice = createSlice({
   name: "auth",
@@ -16,7 +16,7 @@ const authSlice = createSlice({
         localId: action.payload.localId,
       };
       state.token = action.payload.idToken;
-      state.profileImage = null;
+      state.profileImage = action.payload.profileImage || null;
     },
 
     logout: (state) => {
@@ -24,9 +24,13 @@ const authSlice = createSlice({
       state.token = null;
       state.profileImage = null;
     },
+
+    setProfileImage: (state, action) => {
+      state.profileImage = action.payload;
+    },
   },
 });
 
-export const { setUser, logout } = authSlice.actions;
+export const { setUser, logout, setProfileImage } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -64,6 +64,10 @@ const Login = ({ navigation }) => {
         userApi.endpoints.getUserById.initiate(result.localId),
       ).unwrap();
 
+      const profileImageData = await dispatch(
+        userApi.endpoints.getProfileImage.initiate(result.localId),
+      ).unwrap();
+
       dispatch(
         setUser({
           idToken: result.idToken,
@@ -71,6 +75,7 @@ const Login = ({ navigation }) => {
           name: userData.name,
           phone: userData.phone,
           email: userData.email,
+          profileImage: profileImageData?.image || null,
         }),
       );
 

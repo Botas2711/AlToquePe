@@ -2,8 +2,10 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   TouchableOpacity,
   ScrollView,
+  Pressable,
 } from "react-native";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -23,10 +25,27 @@ import {
 
 const AVATAR_SIZE = WIDTH * 0.25;
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
   const user = useSelector((state) => state.auth.user);
+  const profileImage = useSelector((state) => state.auth.profileImage);
 
   const dispatch = useDispatch();
+
+  const getAvatarColor = (name) => {
+    const colors = [
+      "#8E24AA",
+      "#D81B60",
+      "#5E35B1",
+      "#1E88E5",
+      "#00897B",
+      "#43A047",
+      "#FB8C00",
+      "#F4511E",
+      "#039BE5",
+    ];
+    const index = name.charCodeAt(0) % colors.length;
+    return colors[index];
+  };
 
   return (
     <ScrollView
@@ -36,8 +55,32 @@ const Profile = () => {
     >
       <Text style={styles.title}>Mi Perfil</Text>
 
-      <View style={styles.avatarContainer}>
-        <Ionicons name="person" size={AVATAR_SIZE * 0.5} color={colors.black} />
+      <View style={styles.avatarWrapper}>
+        <View
+          style={[
+            styles.avatarContainer,
+            !profileImage && { backgroundColor: getAvatarColor(user.name) },
+          ]}
+        >
+          {profileImage ? (
+            <Image source={{ uri: profileImage }} style={styles.avatar} />
+          ) : (
+            <Text style={styles.avatarText}>
+              {user.name.charAt(0).toUpperCase()}
+            </Text>
+          )}
+        </View>
+
+        <Pressable
+          onPress={() => navigation.navigate("ImageSelector")}
+          style={styles.editButton}
+        >
+          <Ionicons
+            name="camera"
+            size={WIDTH * 0.045}
+            color={colors.background}
+          />
+        </Pressable>
       </View>
 
       <View style={styles.infoContainer}>
@@ -97,31 +140,63 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 12,
   },
-  avatarContainer: {
+  avatarWrapper: {
     alignSelf: "center",
-    width: 100,
-    height: 100,
-    borderRadius: 55,
-    backgroundColor: colors.background,
+    marginVertical: SPACING.md,
+  },
+  avatarContainer: {
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
+    borderRadius: AVATAR_SIZE / 2,
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 20,
+    elevation: 3,
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    overflow: "hidden",
+  },
+  avatar: {
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
+    resizeMode: "cover",
+  },
+  avatarText: {
+    fontFamily: "QuickSand-Bold",
+    fontSize: AVATAR_SIZE * 0.4,
+    color: colors.background,
+  },
+  editButton: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    backgroundColor: colors.primary,
+    width: WIDTH * 0.09,
+    height: WIDTH * 0.09,
+    borderRadius: WIDTH * 0.045,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: colors.background,
+    elevation: 4,
   },
   infoContainer: {
-    marginTop: 15,
-    paddingHorizontal: 20,
+    marginTop: SPACING.md,
+    paddingHorizontal: MARGIN * 0.5,
   },
   buttonContainer: {
-    marginTop: 30,
+    marginTop: SPACING.xl,
   },
   logoutButton: {
     backgroundColor: colors.primary,
-    paddingVertical: 12,
-    borderRadius: 10,
+    height: BUTTON.height,
+    borderRadius: BUTTON.borderRadius,
     alignItems: "center",
+    justifyContent: "center",
   },
   logoutText: {
     color: colors.background,
     fontFamily: "QuickSand-Bold",
+    fontSize: FONT.md,
   },
 });
