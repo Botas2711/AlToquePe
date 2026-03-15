@@ -28,6 +28,7 @@ const AVATAR_SIZE = WIDTH * 0.25;
 const Profile = ({ navigation }) => {
   const user = useSelector((state) => state.auth.user);
   const profileImage = useSelector((state) => state.auth.profileImage);
+  const activeAddress = useSelector((state) => state.auth.activeAddress);
 
   const dispatch = useDispatch();
 
@@ -102,11 +103,28 @@ const Profile = ({ navigation }) => {
           value={user.phone ? `+51 ${user.phone}` : "Número no disponible"}
         />
 
-        <ProfileItem
-          icon="location-outline"
-          label="Dirección"
-          value="Jr. Huáscar 1584, Jesús María"
-        />
+        {activeAddress ? (
+          <Pressable onPress={() => navigation.navigate("AddressManager")}>
+            <ProfileItem
+              icon="location"
+              label="Dirección"
+              value={activeAddress.address}
+              onPress={true}
+            />
+          </Pressable>
+        ) : (
+          <Pressable
+            style={styles.addAddress}
+            onPress={() => navigation.navigate("AddressManager")}
+          >
+            <Ionicons
+              name="add-circle-outline"
+              size={WIDTH * 0.055}
+              color={colors.primary}
+            />
+            <Text style={styles.addAddressText}>Agregar dirección</Text>
+          </Pressable>
+        )}
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -183,6 +201,23 @@ const styles = StyleSheet.create({
   infoContainer: {
     marginTop: SPACING.md,
     paddingHorizontal: MARGIN * 0.5,
+  },
+  addAddress: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: SPACING.sm,
+    padding: SPACING.md,
+    borderRadius: RADIUS.md,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    borderStyle: "dashed",
+    marginBottom: SPACING.md,
+  },
+  addAddressText: {
+    fontFamily: "QuickSand-SemiBold",
+    fontSize: FONT.sm,
+    color: colors.primary,
   },
   buttonContainer: {
     marginTop: SPACING.xl,

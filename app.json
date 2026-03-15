@@ -16,10 +16,16 @@
       "supportsTablet": true
     },
     "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBtySPN0e49RqlfOOvOtwNxMT_xc18j1h0"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+
       "edgeToEdgeEnabled": true
     },
     "web": {

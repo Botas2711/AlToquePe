@@ -3,14 +3,28 @@ import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { WIDTH, MARGIN, FONT, RADIUS, SPACING } from "../Global/layout";
 
-const ProfileItem = ({ icon, label, value }) => {
+const ProfileItem = ({ icon, label, value, onPress }) => {
   return (
-    <View style={styles.container}>
-      <Ionicons name={icon} size={21} color={colors.primary} style={styles.icon} />
+    <View style={styles.container} onPress={onPress} disabled={!onPress}>
+      <Ionicons
+        name={icon}
+        size={WIDTH * 0.05}
+        color={colors.primary}
+        style={styles.icon}
+      />
       <View style={styles.textContainer}>
         <Text style={styles.label}>{label}</Text>
         <Text style={styles.value}>{value}</Text>
       </View>
+
+      {onPress && (
+        <Ionicons
+          name="chevron-forward"
+          size={WIDTH * 0.05}
+          color={colors.primary}
+          style={styles.selectIcon}
+        />
+      )}
     </View>
   );
 };
@@ -32,6 +46,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: SPACING.lg,
+    flex: 1,
   },
   label: {
     fontFamily: "QuickSand-Medium",
@@ -40,8 +55,14 @@ const styles = StyleSheet.create({
   },
   value: {
     fontFamily: "QuickSand-SemiBold",
-    fontSize: FONT.md,
+    fontSize: FONT.sm,
     color: colors.text,
     marginTop: SPACING.xs,
+  },
+  selectIcon: {
+    marginRight: SPACING.md,
+    backgroundColor: colors.primary + "15",
+    padding: SPACING.xs,
+    borderRadius: RADIUS.full,
   },
 });

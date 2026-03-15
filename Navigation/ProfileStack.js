@@ -2,6 +2,7 @@ import Header from "../Components/Header";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Profile from "../Screens/Profile";
 import ImageSelector from "../Components/ImageSelector";
+import AddressManager from "../Screens/AddressManager";
 import { StatusBar } from "react-native";
 
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,11 @@ export default function ProfileStack() {
           name="ImageSelector"
           component={ImageSelector}
           options={{ title: "ImageSelector", headerShown: false }}
+        />
+        <Stack.Screen
+          name="AddressManager"
+          component={AddressManager}
+          options={{ title: "AddressManager", headerShown: false }}
         />
       </Stack.Navigator>
     </>

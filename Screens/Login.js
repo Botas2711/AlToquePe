@@ -5,7 +5,6 @@ import { setUser } from "../Store/features/Auth/authSlice";
 import InputForm from "../Components/InputForm";
 import { colors } from "../Global/colors";
 import { useLoginMutation } from "../Services/authService";
-import { useGetUserByIdQuery } from "../Services/userService";
 import { userApi } from "../Services/userService";
 import Toast from "react-native-toast-message";
 import {
@@ -68,6 +67,13 @@ const Login = ({ navigation }) => {
         userApi.endpoints.getProfileImage.initiate(result.localId),
       ).unwrap();
 
+      const addressesData = await dispatch(
+        userApi.endpoints.getAddresses.initiate(result.localId),
+      ).unwrap();
+
+      const addresses = addressesData ? Object.values(addressesData) : [];
+      const activeAddress = addresses.find((addr) => addr.active === true) || null;
+
       dispatch(
         setUser({
           idToken: result.idToken,
@@ -76,6 +82,7 @@ const Login = ({ navigation }) => {
           phone: userData.phone,
           email: userData.email,
           profileImage: profileImageData?.image || null,
+          activeAddress: activeAddress,
         }),
       );
 
