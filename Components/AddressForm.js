@@ -59,7 +59,6 @@ const AddressForm = ({ onSave, onCancel }) => {
             body: JSON.stringify({
               input: text,
               languageCode: "es",
-              includedRegionCodes: ["pe"],
             }),
           },
         );

@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: SPACING.md,
+    marginRight: SPACING.xs,
     flex: 1,
   },
   label: {
