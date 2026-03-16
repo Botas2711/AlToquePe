@@ -15,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import AddressItem from "../Components/AddressItem";
 import { setActiveAddress } from "../Store/features/Auth/authSlice";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   useGetAddressesQuery,
   useUpdateAddressMutation,
@@ -34,6 +35,7 @@ const LOGO_SIZE = WIDTH * 0.062;
 const CART_SIZE = WIDTH * 0.078;
 
 const Header = () => {
+  const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
   const [showAddresses, setShowAddresses] = useState(false);
 
@@ -134,7 +136,12 @@ const Header = () => {
           style={styles.overlay}
           onPress={() => setShowAddresses(false)}
         >
-          <Pressable style={styles.modal}>
+          <Pressable
+            style={[
+              styles.modal,
+              { paddingBottom: insets.bottom + SPACING.xl * 1.6 },
+            ]}
+          >
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Mis direcciones</Text>
               <Pressable onPress={() => setShowAddresses(false)}>
@@ -150,6 +157,7 @@ const Header = () => {
               <FlatList
                 data={addresses}
                 keyExtractor={(item) => item.id}
+                showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => (
                   <AddressItem
                     address={item}
@@ -272,7 +280,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: RADIUS.xl,
     borderTopRightRadius: RADIUS.xl,
     padding: MARGIN,
-    maxHeight: "50%",
+    maxHeight: "75%",
     paddingBottom: TAB_HEIGHT,
   },
   modalHeader: {

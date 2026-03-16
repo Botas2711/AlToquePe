@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { colors } from "../Global/colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -6,18 +5,30 @@ import HomeStack from "./HomeStack";
 import ShopStack from "./ShopStack";
 import CartStack from "./CartStack";
 import ProfileStack from "./ProfileStack";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { WIDTH, TAB_HEIGHT } from "../Global/layout";
 
 const Tab = createBottomTabNavigator();
 const ICON_SIZE = WIDTH * 0.065;
 
 const TabNavigator = () => {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: {
+          backgroundColor: colors.background,
+          height: TAB_HEIGHT + insets.bottom,
+          paddingBottom: insets.bottom || 8,
+          paddingTop: 10,
+          elevation: 8,
+          shadowOpacity: 0.08,
+          shadowRadius: 6,
+          shadowOffset: { width: 0, height: -3 },
+        },
         tabBarIcon: ({ focused }) => {
           let iconName;
           if (route.name === "Home")
@@ -48,17 +59,3 @@ const TabNavigator = () => {
 };
 
 export default TabNavigator;
-
-const styles = StyleSheet.create({
-  tabBar: {
-    backgroundColor: colors.background,
-    height: TAB_HEIGHT,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 8,
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: -3 },
-  },
-});

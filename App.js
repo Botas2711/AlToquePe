@@ -3,6 +3,7 @@ import { loadFonts } from "./Global/fonts";
 import { Provider } from "react-redux";
 import { store } from "./Store/store.js";
 import MainNavigator from "./Navigation/MainNavigator.js";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 
 export default function App() {
@@ -20,9 +21,11 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <Provider store={store}>
-      <MainNavigator />
-      <Toast />
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <MainNavigator />
+        <Toast />
+      </Provider>
+    </SafeAreaProvider>
   );
 }

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../Global/colors";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import OrderProductItem from "../Components/OrderProductItem";
 import {
   WIDTH,
@@ -28,6 +29,8 @@ const OrderConfirm = ({
   totalPrice,
   activeAddress,
 }) => {
+  const insets = useSafeAreaInsets();
+
   return (
     <Modal
       visible={visible}
@@ -36,8 +39,13 @@ const OrderConfirm = ({
       animationType="slide"
       onRequestClose={onClose}
     >
-      <Pressable style={styles.overlay} onPress={onClose}>
-        <Pressable style={styles.modal}>
+      <View style={styles.overlay}>
+        <View
+          style={[
+            styles.modal,
+            { paddingBottom: insets.bottom + SPACING.xl * 1.6 },
+          ]}
+        >
           <View style={styles.header}>
             <Text style={styles.title}>Confirmar pedido</Text>
             <Pressable onPress={onClose}>
@@ -45,71 +53,76 @@ const OrderConfirm = ({
             </Pressable>
           </View>
 
-          <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <Ionicons
-                name="location-outline"
-                size={WIDTH * 0.05}
-                color={colors.primary}
-              />
-              <Text style={styles.sectionTitle}>Dirección de entrega</Text>
-            </View>
-            {activeAddress ? (
-              <View style={styles.addressCard}>
-                <Ionicons
-                  name={
-                    activeAddress.name === "Casa"
-                      ? "home"
-                      : activeAddress.name === "Trabajo"
-                        ? "briefcase"
-                        : "location"
-                  }
-                  size={WIDTH * 0.05}
-                  color={colors.primary}
-                />
-                <View style={styles.addressInfo}>
-                  <Text style={styles.addressName}>{activeAddress.name}</Text>
-                  <Text style={styles.addressText}>
-                    {activeAddress.address}
-                  </Text>
+          <FlatList
+            data={cartItems}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={
+              <>
+                <View style={styles.section}>
+                  <View style={styles.sectionHeader}>
+                    <Ionicons
+                      name="location-outline"
+                      size={WIDTH * 0.05}
+                      color={colors.primary}
+                    />
+                    <Text style={styles.sectionTitle}>
+                      Dirección de entrega
+                    </Text>
+                  </View>
+                  {activeAddress ? (
+                    <View style={styles.addressCard}>
+                      <Ionicons
+                        name={
+                          activeAddress.name === "Casa"
+                            ? "home"
+                            : activeAddress.name === "Trabajo"
+                              ? "briefcase"
+                              : "location"
+                        }
+                        size={WIDTH * 0.05}
+                        color={colors.primary}
+                      />
+                      <View style={styles.addressInfo}>
+                        <Text style={styles.addressName}>
+                          {activeAddress.name}
+                        </Text>
+                        <Text style={styles.addressText}>
+                          {activeAddress.address}
+                        </Text>
+                      </View>
+                    </View>
+                  ) : (
+                    <View style={styles.noAddress}>
+                      <Ionicons
+                        name="warning-outline"
+                        size={WIDTH * 0.05}
+                        color={colors.secondary}
+                      />
+                      <Text style={styles.noAddressText}>
+                        No tienes una dirección activa
+                      </Text>
+                    </View>
+                  )}
                 </View>
+                <View style={styles.sectionHeader}>
+                  <Ionicons
+                    name="cart-outline"
+                    size={WIDTH * 0.05}
+                    color={colors.primary}
+                  />
+                  <Text style={styles.sectionTitle}>Productos</Text>
+                </View>
+              </>
+            }
+            renderItem={({ item }) => <OrderProductItem item={item} />}
+            ListFooterComponent={
+              <View style={styles.totalContainer}>
+                <Text style={styles.totalLabel}>Total a pagar</Text>
+                <Text style={styles.totalPrice}>S/{totalPrice.toFixed(2)}</Text>
               </View>
-            ) : (
-              <View style={styles.noAddress}>
-                <Ionicons
-                  name="warning-outline"
-                  size={WIDTH * 0.05}
-                  color={colors.secondary}
-                />
-                <Text style={styles.noAddressText}>
-                  No tienes una dirección activa
-                </Text>
-              </View>
-            )}
-          </View>
-
-          <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <Ionicons
-                name="cart-outline"
-                size={WIDTH * 0.05}
-                color={colors.primary}
-              />
-              <Text style={styles.sectionTitle}>Productos</Text>
-            </View>
-            <FlatList
-              data={cartItems}
-              keyExtractor={(item) => item.id}
-              scrollEnabled={false}
-              renderItem={({ item }) => <OrderProductItem item={item} />}
-            />
-          </View>
-
-          <View style={styles.totalContainer}>
-            <Text style={styles.totalLabel}>Total a pagar</Text>
-            <Text style={styles.totalPrice}>S/{totalPrice.toFixed(2)}</Text>
-          </View>
-
+            }
+          />
           <Pressable
             style={[styles.button, !activeAddress && styles.buttonDisabled]}
             onPress={onConfirm}
@@ -128,8 +141,8 @@ const OrderConfirm = ({
               Agrega una dirección de entrega para continuar
             </Text>
           )}
-        </Pressable>
-      </Pressable>
+        </View>
+      </View>
     </Modal>
   );
 };
@@ -147,8 +160,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: RADIUS.xl,
     borderTopRightRadius: RADIUS.xl,
     padding: MARGIN,
-    maxHeight: "85%",
-    paddingBottom: SPACING.xl,
+    maxHeight: "90%",
   },
   header: {
     flexDirection: "row",
@@ -240,6 +252,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: SPACING.sm,
+    marginTop: SPACING.md,
   },
   buttonDisabled: {
     backgroundColor: colors.disable,

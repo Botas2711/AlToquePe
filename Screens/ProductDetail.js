@@ -33,7 +33,11 @@ const ProductDetail = ({ navigation, route }) => {
         style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="chevron-back" size={WIDTH * 0.065} color={colors.black} />
+        <Ionicons
+          name="chevron-back"
+          size={WIDTH * 0.065}
+          color={colors.black}
+        />
       </TouchableOpacity>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -47,12 +51,20 @@ const ProductDetail = ({ navigation, route }) => {
 
           <View style={styles.row}>
             <View style={styles.iconRow}>
-              <Ionicons name="star" size={WIDTH * 0.05} color={colors.secondary} />
+              <Ionicons
+                name="star"
+                size={WIDTH * 0.05}
+                color={colors.secondary}
+              />
               <Text style={styles.smallText}> {product.rating}</Text>
             </View>
 
             <View style={styles.iconRow}>
-              <Ionicons name="thumbs-up-sharp" size={WIDTH * 0.05} color={colors.like} />
+              <Ionicons
+                name="thumbs-up-sharp"
+                size={WIDTH * 0.05}
+                color={colors.like}
+              />
               <Text style={styles.smallText}> {product.likes}%</Text>
             </View>
           </View>
@@ -104,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     borderRadius: RADIUS.full,
     padding: SPACING.sm,
-    top: SPACING.xl,
+    top: SPACING.xl * 1.5,
     left: MARGIN,
     zIndex: 10,
     elevation: 3,
@@ -127,12 +139,12 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: "QuickSand-Bold",
-    fontSize: FONT.xl,
+    fontSize: FONT.lg,
     marginBottom: SPACING.sm,
   },
   brand: {
     fontFamily: "QuickSand-Medium",
-    fontSize: FONT.md,
+    fontSize: FONT.sm,
     marginBottom: SPACING.md,
   },
   row: {
@@ -147,11 +159,11 @@ const styles = StyleSheet.create({
     gap: SPACING.xs,
   },
   smallText: {
-    fontSize: FONT.md,
+    fontSize: FONT.sm,
     fontFamily: "QuickSand-Medium",
   },
   description: {
-    fontSize: FONT.md,
+    fontSize: FONT.sm,
     fontFamily: "QuickSand-Regular",
     color: colors.text,
     textAlign: "justify",
@@ -169,7 +181,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   newPrice: {
-    fontSize: FONT.xl,
+    fontSize: FONT.md,
     fontFamily: "QuickSand-Bold",
     color: colors.black,
   },
@@ -199,6 +211,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: "QuickSand-Bold",
     color: colors.background,
-    fontSize: FONT.md,
+    fontSize: FONT.sm,
   },
 });
