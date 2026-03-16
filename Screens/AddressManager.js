@@ -62,8 +62,8 @@ const AddressManager = ({ navigation }) => {
       dispatch(setActiveAddress({ ...selectedAddr, active: true }));
       Toast.show({
         type: "success",
-        text1: "Dirección activada",
-        text2: "Esta es tu dirección de entrega",
+        text1: "Lugar de entrega actualizado",
+        text2: `Recibirás tus pedidos en ${selectedAddr.address}`,
         visibilityTime: 1500,
       });
     } catch (e) {
@@ -97,12 +97,18 @@ const AddressManager = ({ navigation }) => {
         address: newAddress,
       }).unwrap();
 
+      if (!saved.id) {
+        Toast.show({ type: "error", text1: "Error al guardar el ID" });
+        return;
+      }
+
       await handleSelectAddress(saved);
       setShowForm(false);
       Toast.show({
         type: "success",
         text1: "Dirección guardada",
         text2: "Tu dirección ha sido agregada",
+        visibilityTime: 1700,
       });
     } catch (e) {
       Toast.show({ type: "error", text1: "Error al guardar" });

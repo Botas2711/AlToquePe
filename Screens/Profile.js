@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import ProfileItem from "../Components/ProfileItem";
 import { useSelector } from "react-redux";
 import { logout } from "../Store/features/Auth/authSlice";
+import { clearCart } from "../Store/features/Cart/cartSlice";
 import { useDispatch } from "react-redux";
 import {
   WIDTH,
@@ -129,7 +130,10 @@ const Profile = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.logoutButton}
-            onPress={() => dispatch(logout())}
+            onPress={() => {
+              dispatch(clearCart());
+              dispatch(logout());
+            }}
           >
             <Text style={styles.logoutText}>Cerrar sesión</Text>
           </TouchableOpacity>

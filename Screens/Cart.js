@@ -8,7 +8,9 @@ import {
 import CartItem from "../Components/CartItem";
 import { colors } from "../Global/colors";
 import { useSelector } from "react-redux";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import OrderConfirm from "../Components/OrderConfirm";
+import { useSaveOrderMutation } from "../Services/orderService";
 import {
   WIDTH,
   HEIGHT,
@@ -19,8 +21,12 @@ import {
   BUTTON,
 } from "../Global/layout";
 
-const Cart = () => {
+const Cart = ({ navigation }) => {
   const cartItems = useSelector((state) => state.cart.items);
+  const activeAddress = useSelector((state) => state.auth.activeAddress);
+  const user = useSelector((state) => state.auth.user);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [triggerSaveOrder] = useSaveOrderMutation();
 
   const totalPrice = useMemo(() => {
     return cartItems.reduce(
@@ -28,6 +34,25 @@ const Cart = () => {
       0,
     );
   }, [cartItems]);
+
+  const handleConfirmOrder = async () => {
+    try {
+      // const order = {
+      //   items: cartItems,
+      //   total: totalPrice,
+      //   address: activeAddress,
+      //   status: "delivered",
+      //   createdAt: new Date().toISOString(),
+      // };
+
+      // await triggerSaveOrder({ localId: user.localId, order }).unwrap();
+
+      setShowConfirm(false);
+      navigation.navigate("OrderSuccess");
+    } catch (e) {
+      Toast.show({ type: "error", text1: "Error al confirmar el pedido" });
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -55,11 +80,23 @@ const Cart = () => {
             <Text style={styles.totalPrice}>S/{totalPrice.toFixed(2)}</Text>
           </View>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setShowConfirm(true)}
+          >
             <Text style={styles.buttonText}>Ordenar ahora</Text>
           </TouchableOpacity>
         </View>
       )}
+
+      <OrderConfirm
+        visible={showConfirm}
+        onClose={() => setShowConfirm(false)}
+        onConfirm={handleConfirmOrder}
+        cartItems={cartItems}
+        totalPrice={totalPrice}
+        activeAddress={activeAddress}
+      />
     </View>
   );
 };
