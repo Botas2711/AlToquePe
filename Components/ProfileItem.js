@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     marginLeft: SPACING.xs,
   },
   textContainer: {
-    marginLeft: SPACING.lg,
+    marginLeft: SPACING.md,
     flex: 1,
   },
   label: {
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     marginTop: SPACING.xs,
   },
   selectIcon: {
-    marginRight: SPACING.md,
+    marginRight: SPACING.sm,
     backgroundColor: colors.primary + "15",
     padding: SPACING.xs,
     borderRadius: RADIUS.full,

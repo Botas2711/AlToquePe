@@ -37,15 +37,15 @@ const Cart = ({ navigation }) => {
 
   const handleConfirmOrder = async () => {
     try {
-      // const order = {
-      //   items: cartItems,
-      //   total: totalPrice,
-      //   address: activeAddress,
-      //   status: "delivered",
-      //   createdAt: new Date().toISOString(),
-      // };
+      const order = {
+        items: cartItems,
+        total: totalPrice,
+        address: activeAddress,
+        status: "delivered",
+        createdAt: new Date().toISOString(),
+      };
 
-      // await triggerSaveOrder({ localId: user.localId, order }).unwrap();
+      await triggerSaveOrder({ localId: user.localId, order }).unwrap();
 
       setShowConfirm(false);
       navigation.navigate("OrderSuccess");

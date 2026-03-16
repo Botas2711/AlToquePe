@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Profile from "../Screens/Profile";
 import ImageSelector from "../Components/ImageSelector";
 import AddressManager from "../Screens/AddressManager";
+import Orders from "../Screens/Orders";
+import OrderDetail from "../Components/OrderDetail";
 import { StatusBar } from "react-native";
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +36,16 @@ export default function ProfileStack() {
           name="AddressManager"
           component={AddressManager}
           options={{ title: "AddressManager", headerShown: false }}
+        />
+        <Stack.Screen
+          name="Orders"
+          component={Orders}
+          options={{ title: "Orders", headerShown: false }}
+        />
+        <Stack.Screen
+          name="OrderDetail"
+          component={OrderDetail}
+          options={{ title: "OrderDetail", headerShown: false }}
         />
       </Stack.Navigator>
     </>

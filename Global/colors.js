@@ -6,4 +6,5 @@ export const colors = {
   black: "#000",
   disable: "#ccc",
   like: "#6bb38e",
+  success: "#43A047",
 };

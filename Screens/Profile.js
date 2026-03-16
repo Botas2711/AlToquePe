@@ -107,7 +107,7 @@ const Profile = ({ navigation }) => {
         {activeAddress ? (
           <Pressable onPress={() => navigation.navigate("AddressManager")}>
             <ProfileItem
-              icon="location"
+              icon="location-outline"
               label="Dirección"
               value={activeAddress.address}
               onPress={true}
@@ -126,6 +126,15 @@ const Profile = ({ navigation }) => {
             <Text style={styles.addAddressText}>Agregar dirección</Text>
           </Pressable>
         )}
+
+        <Pressable onPress={() => navigation.navigate("Orders")}>
+          <ProfileItem
+            icon="receipt-outline"
+            label="Mis pedidos"
+            value="Ver historial de compras"
+            onPress={true}
+          />
+        </Pressable>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -222,6 +231,38 @@ const styles = StyleSheet.create({
     fontFamily: "QuickSand-SemiBold",
     fontSize: FONT.sm,
     color: colors.primary,
+  },
+  ordersButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: SPACING.md,
+    borderRadius: RADIUS.md,
+    borderWidth: 1,
+    borderColor: colors.disable,
+    marginBottom: SPACING.md,
+  },
+  ordersButtonLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: SPACING.md,
+  },
+  ordersIconContainer: {
+    width: WIDTH * 0.11,
+    height: WIDTH * 0.11,
+    borderRadius: RADIUS.full,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  ordersButtonTitle: {
+    fontFamily: "QuickSand-Bold",
+    fontSize: FONT.sm,
+    color: colors.black,
+  },
+  ordersButtonSubtitle: {
+    fontFamily: "QuickSand-Medium",
+    fontSize: FONT.xs,
+    color: colors.text,
   },
   buttonContainer: {
     marginTop: SPACING.xl,

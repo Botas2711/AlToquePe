@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../Global/colors";
+import OrderProductItem from "../Components/OrderProductItem";
 import {
   WIDTH,
   HEIGHT,
@@ -51,7 +52,7 @@ const OrderConfirm = ({
                 size={WIDTH * 0.05}
                 color={colors.primary}
               />
-              <Text style={styles.sectionTitle}>Entregar a</Text>
+              <Text style={styles.sectionTitle}>Dirección de entrega</Text>
             </View>
             {activeAddress ? (
               <View style={styles.addressCard}>
@@ -100,23 +101,7 @@ const OrderConfirm = ({
               data={cartItems}
               keyExtractor={(item) => item.id}
               scrollEnabled={false}
-              renderItem={({ item }) => (
-                <View style={styles.productItem}>
-                  <Image
-                    source={{ uri: item.image }}
-                    style={styles.productImage}
-                  />
-                  <View style={styles.productInfo}>
-                    <Text style={styles.productName} numberOfLines={1}>
-                      {item.name}
-                    </Text>
-                    <Text style={styles.productQty}>x{item.quantity}</Text>
-                  </View>
-                  <Text style={styles.productPrice}>
-                    S/{(item.price * item.quantity).toFixed(2)}
-                  </Text>
-                </View>
-              )}
+              renderItem={({ item }) => <OrderProductItem item={item} />}
             />
           </View>
 
@@ -227,39 +212,6 @@ const styles = StyleSheet.create({
     fontFamily: "QuickSand-Medium",
     fontSize: FONT.sm,
     color: colors.secondary,
-  },
-  productItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: SPACING.sm,
-    gap: SPACING.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.disable,
-  },
-  productImage: {
-    width: WIDTH * 0.12,
-    height: WIDTH * 0.12,
-    resizeMode: "contain",
-    borderRadius: RADIUS.sm,
-    backgroundColor: colors.background,
-  },
-  productInfo: {
-    flex: 1,
-  },
-  productName: {
-    fontFamily: "QuickSand-SemiBold",
-    fontSize: FONT.sm,
-    color: colors.black,
-  },
-  productQty: {
-    fontFamily: "QuickSand-Medium",
-    fontSize: FONT.xs,
-    color: colors.text,
-  },
-  productPrice: {
-    fontFamily: "QuickSand-Bold",
-    fontSize: FONT.sm,
-    color: colors.black,
   },
   totalContainer: {
     flexDirection: "row",
