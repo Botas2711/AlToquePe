@@ -89,5 +89,5 @@ El proyecto usa un sistema de layout centralizado en `Global/layout.js` que adap
 
 ## 👨‍💻 Autor
 
-**Agustín Alejandro Aguilar Lindo**
-Estudiante de Ingenieria de Sistemas de Información | UPC
+**Agustín Alejandro Aguilar Lindo**  
+Estudiante de Ingeniería de Sistemas de Información | UPC
